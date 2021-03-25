@@ -32,6 +32,21 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Checks if file is empty
+        CheckData(this);
+        //If file is empty
+        if(isEmpty) {
+            try {
+                //Set user's name and date of birth
+                WriteData(this, "John Doe", "23 April 1997");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Fragment fragment = new Login();
+        loadFragment(fragment);
+
         try {
             this.signKeyPair = Ed25519Sign.KeyPair.newKeyPair();
             byte[] signPubKeyBytes = signKeyPair.getPublicKey();
@@ -57,31 +72,6 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }
-
-        //Checks if file is empty
-        CheckData(this);
-        //If file is empty
-        if(isEmpty) {
-            try {
-                //Set user's name and date of birth
-                WriteData(this, "John Doe", "23 April 1997");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        //Loads login fragment
-        Fragment f = new Login();
-        loadFragment(f);
-    }
-
-    @Override
-    public void HandleCloudAgent(CloudAgent cloudAgent) {
-        try{
-            this.CloudAgentId = cloudAgent.cloudAgentId;
-        }catch (NullPointerException npe) {
-            //Do nothing
-        }
     }
 
     /**
@@ -93,6 +83,15 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         transaction.replace(R.id.start, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void HandleCloudAgent(CloudAgent cloudAgent) {
+        try{
+            this.CloudAgentId = cloudAgent.cloudAgentId;
+        }catch (NullPointerException npe) {
+            //Do nothing
+        }
     }
 
     /**

@@ -1,14 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditMyDetails">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <EditText
+        android:id="@+id/editdetails"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="160dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:background="#CE2A0540"
+        android:gravity="center"
+        android:text="Edit Details"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40dp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editdetails"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="50dp"
+        android:text="Name:"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/dob"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="50dp"
+        android:text="Date of Birth: "
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/uni"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dob"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="65dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="50dp"
+        android:text="University:"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/gradYear"
+        android:layout_width="124dp"
+        android:layout_height="52dp"
+        android:layout_below="@+id/uni"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="50dp"
+        android:text="Year of Graduation:"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:id="@+id/degree1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/gradYear"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="53dp"
+        android:layout_marginLeft="53dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/blank" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="152dp"
+        android:layout_height="41dp"
+        android:layout_below="@+id/editdetails"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginRight="37dp"
+        android:layout_toEndOf="@+id/name"
+        android:layout_toRightOf="@+id/name"
+        android:text="John Doe"
+        android:textAlignment="center"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/editDob"
+        android:layout_width="152dp"
+        android:layout_height="41dp"
+        android:layout_below="@+id/editName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginRight="37dp"
+        android:layout_toEndOf="@+id/dob"
+        android:layout_toRightOf="@+id/dob"
+        android:text="23 April 1997"
+        android:textAlignment="center"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/uniName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editDob"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="53dp"
+        android:layout_marginLeft="53dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginRight="37dp"
+        android:layout_toEndOf="@+id/uni"
+        android:layout_toRightOf="@+id/uni"
+        android:clickable="false"
+        android:editable="false"
+        android:gravity="center"
+        android:text="University of Dundee"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/gradYearNum"
+        android:layout_width="152dp"
+        android:layout_height="41dp"
+        android:layout_below="@+id/uniName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginRight="47dp"
+        android:layout_toEndOf="@+id/gradYear"
+        android:layout_toRightOf="@+id/gradYear"
+        android:clickable="false"
+        android:editable="false"
+        android:gravity="center"
+        android:text="2022"
+        android:textAlignment="center" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editBtn"
+        android:layout_width="34dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="11dp"
+        android:background="@drawable/round_button"
+        android:foreground="@drawable/ic_action_done"
+        app:backgroundTint="#E8023C70" />
+</RelativeLayout>
