@@ -1,64 +1,93 @@
 package com.example.virtualwallet;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UniNotifications#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class UniNotifications extends Fragment {
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public UniNotifications() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UniNotifications.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UniNotifications newInstance(String param1, String param2) {
-        UniNotifications fragment = new UniNotifications();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+public class UniNotifications extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_uni_notifications, container, false);
+        View view = inflater.inflate(R.layout.fragment_uni_notifications, container, false);
+
+        Button back = (Button) view.findViewById(R.id.back);
+        Button logout = (Button) view.findViewById(R.id.logout);
+        Button student1 = (Button) view.findViewById(R.id.student1);
+
+        back.setOnClickListener(this);
+        logout.setOnClickListener(this);
+        student1.setOnClickListener(this);
+
+        student1.setText(getDetails(view)[0]);
+
+        return view;
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment;
+
+        switch(v.getId()) {
+            case R.id.back:
+                fragment = new UniMain();
+                loadFragment(fragment);
+                break;
+            case R.id.logout:
+                fragment = new Login();
+                loadFragment(fragment);
+                break;
+            case R.id.student1:
+                fragment = new UniSendDocuments();
+                loadFragment(fragment);
+                break;
+        }
+    }
+
+    /**
+     * Replaces current fragment with Login fragment
+     * @param fragment Fragment to be displayed
+     */
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.start, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    /**
+     * Gets details of user from file
+     * @param view current view
+     * @return Array of details (name and date of birth)
+     */
+    public String[] getDetails(View view) {
+        try {
+            FileInputStream fileIn = view.getContext().openFileInput("user_data.txt");
+            InputStreamReader InputRead = new InputStreamReader(fileIn);
+
+            char[] inputBuffer = new char[100];
+            String[] strArray = new String[100];
+            int charRead;
+
+            while ((charRead = InputRead.read(inputBuffer)) > 0) {
+                // char to string conversion
+                String readstring = String.copyValueOf(inputBuffer, 0, charRead);
+                strArray = readstring.split(";");
+            }
+            InputRead.close();
+            return strArray;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

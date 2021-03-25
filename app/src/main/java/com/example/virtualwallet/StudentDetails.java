@@ -1,64 +1,110 @@
 package com.example.virtualwallet;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudentDetails#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class StudentDetails extends Fragment {
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public StudentDetails() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentDetails.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StudentDetails newInstance(String param1, String param2) {
-        StudentDetails fragment = new StudentDetails();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+public class StudentDetails extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_details, container, false);
+
+        Button back = (Button) view.findViewById(R.id.back);
+        Button logout = (Button) view.findViewById(R.id.logout);
+        TextView header = (TextView) view.findViewById(R.id.name);
+        TextView name = (TextView) view.findViewById(R.id.nameText);
+        TextView dob = (TextView) view.findViewById(R.id.dobText);
+
+        header.setText(getDetails(view)[0]);
+        name.setText(getDetails(view)[0]);
+        dob.setText(getDetails(view)[1]);
+
+        back.setOnClickListener(this);
+        logout.setOnClickListener(this);
+
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment;
+
+        switch(v.getId()) {
+            case R.id.back:
+                FragmentManager manager = getFragmentManager();
+
+                if (manager != null)
+                {
+                    if(manager.getBackStackEntryCount() >= 1){
+                        String topOnStack = manager.getBackStackEntryAt(manager.getBackStackEntryCount()-1).getName();
+
+                        if(topOnStack.equals("com.example.virtualwallet.CompanyNotifications")) {
+                            fragment = new CompanyNotifications();
+                            loadFragment(fragment);
+                        } else if(topOnStack.equals("com.example.virtualwallet.CompanyConnections")) {
+                            fragment = new CompanyConnections();
+                            loadFragment(fragment);
+                        } else if(topOnStack.equals("com.example.virtualwallet.UniConnections")) {
+                            fragment = new UniConnections();
+                            loadFragment(fragment);
+                        }
+                    }
+                }
+                break;
+            case R.id.logout:
+                fragment = new Login();
+                loadFragment(fragment);
+                break;
+        }
+    }
+
+    /**
+     * Replaces current fragment with Login fragment
+     * @param fragment Fragment to be displayed
+     */
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.start, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    /**
+     * Gets details of user from file
+     * @param view current view
+     * @return Array of details (name and date of birth)
+     */
+    public String[] getDetails(View view) {
+        try {
+            FileInputStream fileIn = view.getContext().openFileInput("user_data.txt");
+            InputStreamReader InputRead = new InputStreamReader(fileIn);
+
+            char[] inputBuffer = new char[100];
+            String[] strArray = new String[100];
+            int charRead;
+
+            while ((charRead = InputRead.read(inputBuffer)) > 0) {
+                // char to string conversion
+                String readstring = String.copyValueOf(inputBuffer, 0, charRead);
+                strArray = readstring.split(";");
+            }
+            InputRead.close();
+            return strArray;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

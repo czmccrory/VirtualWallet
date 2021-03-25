@@ -1,14 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UniSendDocuments">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/uniSendDocs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="200dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:background="#CE2A0540"
+        android:gravity="center"
+        android:text="Send Documents"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40dp" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginBottom="240dp"
+        android:src="@drawable/blank" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="250dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="10dp"
+                android:text="To: "
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/sendTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textAlignment="center" />
+
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/selectDoc"
+        android:layout_width="245dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="85dp"
+        android:layout_marginBottom="193dp"
+        android:backgroundTint="#056A88"
+        android:text="Select Document" />
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="133dp"
+        android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="93dp"
+        android:backgroundTint="#056A88"
+        android:text="Send" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="377dp"
+        android:background="#CE2A0540"
+        android:backgroundTint="#00FFFFFF"
+        android:foreground="@drawable/ic_action_logout" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="372dp"
+        android:background="#CE2A0540"
+        android:backgroundTint="#00FFFFFF"
+        android:foreground="@drawable/ic_action_back" />
+
+</RelativeLayout>

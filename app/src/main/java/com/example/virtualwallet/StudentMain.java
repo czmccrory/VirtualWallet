@@ -1,64 +1,72 @@
 package com.example.virtualwallet;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudentMain#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class StudentMain extends Fragment {
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public StudentMain() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentMain.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StudentMain newInstance(String param1, String param2) {
-        StudentMain fragment = new StudentMain();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+public class StudentMain extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_main, container, false);
+
+        Button logout = (Button) view.findViewById(R.id.logout);
+        Button studentDocuments = (Button) view.findViewById(R.id.studentDocuments);
+        Button studentNotifications = (Button) view.findViewById(R.id.studentNotifications);
+        Button studentConnections = (Button) view.findViewById(R.id.studentConnections);
+        Button myDetails = (Button) view.findViewById(R.id.myDetails);
+
+        logout.setOnClickListener(this);
+        studentDocuments.setOnClickListener(this);
+        studentNotifications.setOnClickListener(this);
+        studentConnections.setOnClickListener(this);
+        myDetails.setOnClickListener(this);
+
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment;
+
+        switch(v.getId()) {
+            case R.id.logout:
+                fragment = new Login();
+                loadFragment(fragment);
+                break;
+            case R.id.studentDocuments:
+                fragment = new StudentDocuments();
+                loadFragment(fragment);
+                break;
+            case R.id.studentNotifications:
+                fragment = new StudentNotifications();
+                loadFragment(fragment);
+                break;
+            case R.id.studentConnections:
+                fragment = new StudentConnections();
+                loadFragment(fragment);
+                break;
+            case R.id.myDetails:
+                fragment = new MyDetails();
+                loadFragment(fragment);
+                break;
+        }
+    }
+
+    /**
+     * Replaces current fragment with Login fragment
+     * @param fragment Fragment to be displayed
+     */
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.start, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

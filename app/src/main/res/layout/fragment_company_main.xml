@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CompanyMain">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/companyMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="200dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:background="#CE2A0540"
+        android:gravity="center"
+        android:text="MyWallet"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40dp" />
+    <!--Change 'MyWallet' to be logo-->
 
-</FrameLayout>
+    <Button
+        android:id="@+id/companyNotifications"
+        android:layout_width="165dp"
+        android:layout_height="65dp"
+        android:layout_below="@+id/companyMain"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="160dp"
+        android:background="#056A88"
+        android:backgroundTint="#056A88"
+        android:text="Notifications" />
+
+    <Button
+        android:id="@+id/companyConnections"
+        android:layout_width="165dp"
+        android:layout_height="65dp"
+        android:layout_below="@+id/companyNotifications"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="#056A88"
+        android:backgroundTint="#056A88"
+        android:text="Connections" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="377dp"
+        android:background="#CE2A0540"
+        android:backgroundTint="#00FFFFFF"
+        android:foreground="@drawable/ic_action_logout" />
+
+</RelativeLayout>
