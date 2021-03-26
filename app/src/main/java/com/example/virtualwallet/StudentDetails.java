@@ -23,7 +23,7 @@ public class StudentDetails extends Fragment implements View.OnClickListener{
 
         Button back = (Button) view.findViewById(R.id.back);
         Button logout = (Button) view.findViewById(R.id.logout);
-        TextView header = (TextView) view.findViewById(R.id.name);
+        TextView header = (TextView) view.findViewById(R.id.details);
         TextView name = (TextView) view.findViewById(R.id.nameText);
         TextView dob = (TextView) view.findViewById(R.id.dobText);
 
@@ -53,10 +53,16 @@ public class StudentDetails extends Fragment implements View.OnClickListener{
                         if(topOnStack.equals("com.example.virtualwallet.CompanyNotifications")) {
                             fragment = new CompanyNotifications();
                             loadFragment(fragment);
-                        } else if(topOnStack.equals("com.example.virtualwallet.CompanyConnections")) {
+                        }
+                        if(topOnStack.equals("com.example.virtualwallet.CompanyConnections")) {
                             fragment = new CompanyConnections();
                             loadFragment(fragment);
-                        } else if(topOnStack.equals("com.example.virtualwallet.UniConnections")) {
+                        }
+                        if(topOnStack.equals("com.example.virtualwallet.UniConnections")) {
+                            fragment = new UniConnections();
+                            loadFragment(fragment);
+                        }
+                        if(topOnStack.equals("com.example.virtualwallet.UniNotifications")) {
                             fragment = new UniConnections();
                             loadFragment(fragment);
                         }

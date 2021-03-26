@@ -33,8 +33,8 @@ public class StudentRequestDocuments extends Fragment implements View.OnClickLis
         spin.setOnItemSelectedListener(this);
 
         //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, docs);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter aa = new ArrayAdapter(getContext(), R.layout.spinner_list, docs);
+        aa.setDropDownViewResource(R.layout.spinner_list);
         //Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
 

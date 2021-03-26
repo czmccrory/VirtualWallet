@@ -17,7 +17,7 @@ public class CompanyNotifications extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_uni_notifications, container, false);
+        View view = inflater.inflate(R.layout.fragment_company_notifications, container, false);
 
         Button back = (Button) view.findViewById(R.id.back);
         Button logout = (Button) view.findViewById(R.id.logout);
@@ -99,3 +99,4 @@ public class CompanyNotifications extends Fragment implements View.OnClickListen
         }
     }
 }
+

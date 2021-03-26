@@ -67,13 +67,15 @@ public class Login extends Fragment implements View.OnClickListener{
             }
         } else if(username.equals(hash("jsUoD"))) {
             if(password.equals(hash("Uni123"))) {
-                System.out.println("Uni");
+                fragment = new UniMain();
+                loadFragment(fragment);
             } else {
                 Toast.makeText(getContext(), "Incorrect username or password. Please try again.", Toast.LENGTH_SHORT).show();
             }
         } else if(username.equals(hash("poNCR"))) {
             if(password.equals(hash("NCR123"))) {
-                System.out.println("NCR");
+                fragment = new CompanyMain();
+                loadFragment(fragment);
             } else {
                 Toast.makeText(getContext(), "Incorrect username or password. Please try again.", Toast.LENGTH_SHORT).show();
             }

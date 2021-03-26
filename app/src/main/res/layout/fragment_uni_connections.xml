@@ -3,10 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentConnections"
-    android:id="@+id/uniConns"
-    android:background="@color/teal_200">
-<!--Change background-->
+    tools:context=".UniConnections">
 
     <TextView
         android:id="@+id/uniConnections"
@@ -16,115 +13,126 @@
         android:layout_alignParentRight="true"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
-        android:background="#CE2A0540"
+        android:background="#463CB7AC"
         android:gravity="center"
         android:text="Connections"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="40dp" />
+        android:textSize="60dp" />
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="400dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="150dp">
 
         <TableRow
-            android:layout_marginTop="300dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:layout_marginTop="150dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="100dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="30dp"
                 android:text="Student"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="30dp"
+                android:text="Year of Graduation"
                 android:textAlignment="center"
-                android:text="Year of Graduation"/>
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp">
 
             <Button
                 android:id="@+id/student1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:background="#056A88"
-                android:backgroundTint="#056A88"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:backgroundTint="#835E76"
                 android:textAlignment="center"
-                android:textSize="10dp"/>
+                android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/rounded_corners"
+                android:text="2020"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:text="2020"/>
+                android:textSize="15dp" />
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp">
 
             <Button
                 android:id="@+id/student2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:background="#056A88"
-                android:backgroundTint="#056A88"
+                android:layout_marginLeft="20dp"
+                android:backgroundTint="#835E76"
                 android:clickable="false"
                 android:text="Lewis Taylor"
-                android:textSize="10dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/rounded_corners"
                 android:text="2022"
                 android:textAlignment="center"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="15dp" />
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <Button
                 android:id="@+id/student3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:background="#056A88"
-                android:backgroundTint="#056A88"
+                android:layout_marginLeft="20dp"
+                android:backgroundTint="#835E76"
                 android:clickable="false"
                 android:text="Karen Lee"
-                android:textSize="10dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/rounded_corners"
                 android:text="2011"
                 android:textAlignment="center"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="15dp" />
 
         </TableRow>
 
@@ -133,25 +141,23 @@
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="372dp"
-        android:background="#CE2A0540"
-        android:backgroundTint="#00FFFFFF"
+        android:backgroundTint="#056A88"
         android:foreground="@drawable/ic_action_back" />
 
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="377dp"
-        android:background="#CE2A0540"
-        android:backgroundTint="#00FFFFFF"
+        android:backgroundTint="#056A88"
         android:foreground="@drawable/ic_action_logout" />
 
 </RelativeLayout>

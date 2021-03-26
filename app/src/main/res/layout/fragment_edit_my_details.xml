@@ -14,12 +14,12 @@
         android:layout_alignParentRight="true"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
-        android:background="#CE2A0540"
+        android:background="#463CB7AC"
         android:gravity="center"
         android:text="Edit Details"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="40dp" />
+        android:textSize="60dp" />
 
     <TextView
         android:id="@+id/name"
@@ -32,7 +32,8 @@
         android:layout_marginLeft="62dp"
         android:layout_marginTop="50dp"
         android:text="Name:"
-        android:textSize="20dp" />
+        android:textColor="@color/white"
+        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/dob"
@@ -46,7 +47,8 @@
         android:layout_marginLeft="62dp"
         android:layout_marginTop="50dp"
         android:text="Date of Birth: "
-        android:textSize="20dp" />
+        android:textColor="@color/white"
+        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/uni"
@@ -59,7 +61,8 @@
         android:layout_marginLeft="65dp"
         android:layout_marginTop="50dp"
         android:text="University:"
-        android:textSize="20dp" />
+        android:textColor="@color/white"
+        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/gradYear"
@@ -72,7 +75,8 @@
         android:layout_marginLeft="62dp"
         android:layout_marginTop="50dp"
         android:text="Year of Graduation:"
-        android:textSize="20dp" />
+        android:textColor="@color/white"
+        android:textSize="18dp" />
 
     <ImageView
         android:id="@+id/degree1"
@@ -90,75 +94,89 @@
 
     <EditText
         android:id="@+id/editName"
-        android:layout_width="152dp"
-        android:layout_height="41dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/editdetails"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginStart="60dp"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="37dp"
-        android:layout_marginRight="37dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         android:layout_toEndOf="@+id/name"
         android:layout_toRightOf="@+id/name"
         android:text="John Doe"
         android:textAlignment="center"
-        android:gravity="center"/>
+        android:textSize="15dp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/rounded_corners"/>
 
     <EditText
         android:id="@+id/editDob"
-        android:layout_width="152dp"
-        android:layout_height="41dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/editName"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginStart="60dp"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="37dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginRight="37dp"
         android:layout_toEndOf="@+id/dob"
         android:layout_toRightOf="@+id/dob"
         android:text="23 April 1997"
         android:textAlignment="center"
-        android:gravity="center"/>
+        android:textSize="15dp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/rounded_corners"/>
 
-    <TextView
+    <EditText
         android:id="@+id/uniName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="151dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/editDob"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="53dp"
-        android:layout_marginLeft="53dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
         android:layout_marginTop="45dp"
-        android:layout_marginEnd="37dp"
-        android:layout_marginRight="37dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginRight="39dp"
         android:layout_toEndOf="@+id/uni"
         android:layout_toRightOf="@+id/uni"
+        android:background="@drawable/rounded_corners"
+        android:editable="false"
         android:gravity="center"
         android:text="University of Dundee"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
 
-    <TextView
+    <EditText
         android:id="@+id/gradYearNum"
-        android:layout_width="152dp"
-        android:layout_height="41dp"
+        android:layout_width="158dp"
+        android:layout_height="37dp"
         android:layout_below="@+id/uniName"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="47dp"
-        android:layout_marginRight="47dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:layout_toEndOf="@+id/gradYear"
         android:layout_toRightOf="@+id/gradYear"
+        android:background="@drawable/rounded_corners"
+        android:editable="false"
         android:gravity="center"
         android:text="2022"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/doneBtn"
@@ -171,30 +189,29 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="11dp"
         android:foreground="@drawable/ic_action_done"
-        app:backgroundTint="#E8023C70" />
+        app:backgroundTint="#835E76"
+        android:background="@drawable/ic_circle"/>
 
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="372dp"
-        android:background="#CE2A0540"
-        android:backgroundTint="#00FFFFFF"
+        android:backgroundTint="#056A88"
         android:foreground="@drawable/ic_action_back" />
 
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="372dp"
-        android:background="#CE2A0540"
-        android:backgroundTint="#00FFFFFF"
+        android:backgroundTint="#056A88"
         android:foreground="@drawable/ic_action_logout" />
     
 </RelativeLayout>

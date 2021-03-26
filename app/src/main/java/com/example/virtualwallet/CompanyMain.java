@@ -36,11 +36,11 @@ public class CompanyMain extends Fragment implements  View.OnClickListener{
                 fragment = new Login();
                 loadFragment(fragment);
                 break;
-            case R.id.uniNotifications:
+            case R.id.companyNotifications:
                 fragment = new CompanyNotifications();
                 loadFragment(fragment);
                 break;
-            case R.id.uniConnections:
+            case R.id.companyConnections:
                 fragment = new CompanyConnections();
                 loadFragment(fragment);
                 break;

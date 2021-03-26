@@ -54,14 +54,23 @@ public class UniNotifications extends Fragment implements View.OnClickListener {
     }
 
     /**
+     * First checks if fragment to load is 'StudentSendDocuments'
      * Replaces current fragment with Login fragment
+     * May add current fragment to backstack, depending on what button was clicked
      * @param fragment Fragment to be displayed
      */
     public void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.start, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        if(fragment.getClass().getName().equals("com.example.virtualwallet.StudentDetails"))      {
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.start, fragment);
+            transaction.addToBackStack(getClass().getName());
+            transaction.commit();
+        } else {
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.start, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 
     /**
