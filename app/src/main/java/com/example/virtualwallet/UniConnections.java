@@ -74,7 +74,7 @@ public class UniConnections extends Fragment implements View.OnClickListener {
 
     /**
      * Gets details of user from file
-     * @param view current view
+     * @param view Current view
      * @return Array of details (name and date of birth)
      */
     public String[] getDetails(View view) {

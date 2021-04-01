@@ -79,7 +79,7 @@ public class EditMyDetails extends Fragment implements View.OnClickListener{
 
     /**
      * Writes to file
-     * @param c
+     * @param c Current context
      * @param name Name to be written to file
      * @param dob Date of birth to be written to file
      * @throws IOException Error if anything goes wrong

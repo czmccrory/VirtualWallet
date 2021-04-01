@@ -1,7 +1,9 @@
 package com.example.virtualwallet;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
             String encodedSignKey = Base64.encodeToString(signPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
             String encodedNextKey = Base64.encodeToString(nextPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
 
+            SaveData(getApplicationContext(), encodedSignKey, encodedNextKey);
+
             Registration reg = new Registration(
                     encodedSignKey,
                     encodedNextKey,
@@ -67,9 +71,12 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
             Gson gson = gsonb.create();
             String json = gson.toJson(reg);
 
-            RegisterActivity task = new RegisterActivity(this);
+            RegisterActivity task = new RegisterActivity(this, getApplicationContext());
             task.execute(reg);
-        } catch (GeneralSecurityException e) {
+
+            GetConnections getConnections = new GetConnections(getApplicationContext());
+            getConnections.execute();
+        } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -138,6 +145,25 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         } catch (Exception e) {
             e.printStackTrace();
             isEmpty = true;
+        }
+    }
+
+    /**
+     * Writes to file
+     * @param c Current context
+     * @param signKey Signing key
+     * @param nextKey Next key in chain
+     * @throws IOException Error if anything goes wrong
+     */
+    private void SaveData(Context c, String signKey, String nextKey) throws IOException {
+        try {
+            FileOutputStream fileOut = c.openFileOutput("data.txt", c.MODE_PRIVATE);
+            OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
+            outputWriter.write(signKey + ";" + nextKey + ";");
+            outputWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
         }
     }
 }

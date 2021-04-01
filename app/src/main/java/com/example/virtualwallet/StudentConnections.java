@@ -9,7 +9,9 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-public class StudentConnections extends Fragment implements View.OnClickListener{
+public class StudentConnections extends Fragment implements View.OnClickListener {
+    String encodedKey;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -19,10 +21,12 @@ public class StudentConnections extends Fragment implements View.OnClickListener
         Button back = (Button) view.findViewById(R.id.back);
         Button logout = (Button) view.findViewById(R.id.logout);
         Button NCR = (Button) view.findViewById(R.id.NCR);
+        Button connect = (Button) view.findViewById(R.id.connect);
 
         back.setOnClickListener(this);
         logout.setOnClickListener(this);
         NCR.setOnClickListener(this);
+        connect.setOnClickListener(this);
 
         return view;
     }
@@ -44,7 +48,8 @@ public class StudentConnections extends Fragment implements View.OnClickListener
                 fragment = new StudentSendDocuments();
                 loadFragment(fragment);
                 break;
-        }
+//            case R.id.connect:
+          }
     }
 
     /**
