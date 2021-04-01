@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
 
     /**
      * Checks to see if file is empty
-     * @param view View that was clicked
+     * @param view MainActivity interface
      */
     public void CheckData(MainActivity view) {
         try {
@@ -141,3 +141,5 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         }
     }
 }
+
+

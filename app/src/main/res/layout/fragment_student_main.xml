@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StudentMain">
+
+    <TextView
+        android:id="@+id/studentMain"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentEnd="true"
+        android:background="#463CB7AC" />
+
+    <Button
+        android:id="@+id/studentDocuments"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/studentMain"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="#835E76"
+        android:text="Documents" />
+
+    <Button
+        android:id="@+id/studentNotifications"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/studentDocuments"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#835E76"
+        android:text="Notifications" />
+
+    <Button
+        android:id="@+id/studentConnections"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/studentNotifications"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#835E76"
+        android:text="Connections" />
+
+    <Button
+        android:id="@+id/myDetails"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/studentConnections"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#835E76"
+        android:text="My Details" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="372dp"
+        android:backgroundTint="#056A88"
+        android:foreground="@drawable/ic_action_logout" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="125dp"
+        android:layout_marginEnd="120dp"
+        android:src="@drawable/logo" />
+
+</RelativeLayout>
