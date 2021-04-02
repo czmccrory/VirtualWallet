@@ -12,6 +12,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.virtualwallet.ui.company.CompanyMain;
+import com.example.virtualwallet.ui.student.StudentMain;
+import com.example.virtualwallet.ui.uni.UniMain;
+
 import java.security.MessageDigest;
 
 public class Login extends Fragment implements View.OnClickListener{

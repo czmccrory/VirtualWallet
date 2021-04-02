@@ -11,6 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.virtualwallet.ui.uni.UniConnections;
+import com.example.virtualwallet.ui.company.CompanyConnections;
+import com.example.virtualwallet.ui.company.CompanyNotifications;
+
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
@@ -50,19 +54,19 @@ public class StudentDetails extends Fragment implements View.OnClickListener{
                     if(manager.getBackStackEntryCount() >= 1){
                         String topOnStack = manager.getBackStackEntryAt(manager.getBackStackEntryCount()-1).getName();
 
-                        if(topOnStack.equals("com.example.virtualwallet.CompanyNotifications")) {
+                        if(topOnStack.equals("com.example.virtualwallet.ui.company.CompanyNotifications")) {
                             fragment = new CompanyNotifications();
                             loadFragment(fragment);
                         }
-                        if(topOnStack.equals("com.example.virtualwallet.CompanyConnections")) {
+                        if(topOnStack.equals("com.example.virtualwallet.ui.company.CompanyConnections")) {
                             fragment = new CompanyConnections();
                             loadFragment(fragment);
                         }
-                        if(topOnStack.equals("com.example.virtualwallet.UniConnections")) {
+                        if(topOnStack.equals("com.example.virtualwallet.ui.uni.UniConnections")) {
                             fragment = new UniConnections();
                             loadFragment(fragment);
                         }
-                        if(topOnStack.equals("com.example.virtualwallet.UniNotifications")) {
+                        if(topOnStack.equals("com.example.virtualwallet.ui.uni.UniNotifications")) {
                             fragment = new UniConnections();
                             loadFragment(fragment);
                         }

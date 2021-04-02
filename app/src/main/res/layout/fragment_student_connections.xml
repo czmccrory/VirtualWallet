@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentConnections">
+    tools:context=".ui.student.StudentConnections">
 
     <TextView
         android:id="@+id/studentConnections"
@@ -20,38 +19,28 @@
         android:textColor="@color/white"
         android:textSize="60dp" />
 
-    <Button
-        android:id="@+id/NCR"
-        android:layout_width="165dp"
-        android:layout_height="65dp"
+    <ListView
+        android:id="@+id/connectionListView"
+        android:layout_width="358dp"
+        android:layout_height="511dp"
         android:layout_below="@+id/studentConnections"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="290dp"
-        android:backgroundTint="#835E76"
-        android:text="NCR" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp">
 
-    <Button
-        android:id="@+id/UoD"
-        android:layout_width="165dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/NCR"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:backgroundTint="#835E76"
-        android:clickable="false"
-        android:text="University of Dundee" />
+    </ListView>
 
-    <Button
-        android:id="@+id/Google"
-        android:layout_width="165dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/UoD"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:backgroundTint="#835E76"
-        android:clickable="false"
-        android:text="Google" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/connectionListView"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="7dp"
+        android:clickable="true"
+        android:src="@drawable/ic_add_white_24dp" />
 
     <Button
         android:id="@+id/back"
@@ -74,15 +63,5 @@
         android:layout_marginStart="372dp"
         android:backgroundTint="#056A88"
         android:foreground="@drawable/ic_action_logout" />
-
-    <Button
-        android:id="@+id/connect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="196dp"
-        android:text="Button" />
 
 </RelativeLayout>
