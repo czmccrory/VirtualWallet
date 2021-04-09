@@ -20,14 +20,14 @@
         android:textColor="@color/white"
         android:textSize="60dp" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="261dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="179dp"
-        android:src="@drawable/blank" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="261dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginBottom="179dp"-->
+<!--        android:src="@drawable/blank" />-->
 
     <Button
         android:id="@+id/back"
@@ -51,6 +51,23 @@
         android:backgroundTint="#056A88"
         android:foreground="@drawable/ic_action_logout" />
 
-<!--Add buttons to request documents, send documents, etc.?-->
+    <ListView
+        android:id="@+id/credentialListView"
+        android:layout_width="match_parent"
+        android:layout_height="373dp"
+        android:layout_below="@+id/studentDocs"/>
+
+    <Button
+        android:id="@+id/Request"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginBottom="13dp"
+        android:backgroundTint="#835E76"
+        android:text="Request Document" />
 
 </RelativeLayout>

@@ -9,12 +9,26 @@ import java.util.List;
 
 public class ConnectionsViewModel extends ViewModel {
 
-    private MutableLiveData<List<Connection>> connections;
+    private MutableLiveData<List<Connection>> studentConnections, companyConnections, uniConnections;
 
-    public MutableLiveData<List<Connection>> getConnections() {
-        if (connections == null) {
-            connections = new MutableLiveData<>();
+    public MutableLiveData<List<Connection>> getStudentConnections() {
+        if (studentConnections == null) {
+            studentConnections = new MutableLiveData<>();
         }
-        return connections;
+        return studentConnections;
+    }
+
+    public MutableLiveData<List<Connection>> getCompanyConnections() {
+        if (companyConnections == null) {
+            companyConnections = new MutableLiveData<>();
+        }
+        return companyConnections;
+    }
+
+    public MutableLiveData<List<Connection>> getUniConnections() {
+        if (uniConnections == null) {
+            uniConnections = new MutableLiveData<>();
+        }
+        return uniConnections;
     }
 }

@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         Fragment fragment = new Login();
         loadFragment(fragment);
 
-        this.wallet = new Wallet();
+        this.wallet = new Wallet();;
 
         try {
             InputStream in = this.openFileInput(WALLET_FILE_NAME);
@@ -69,20 +69,17 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
             Gson gson = gsonb.disableHtmlEscaping().create();
 
             this.wallet = gson.fromJson(new InputStreamReader(in), Wallet.class);
-
         } catch (FileNotFoundException e) {
             System.out.println("*****************************************************************");
             System.out.println("exception finding file, initializing cloud agent");
             System.out.println("*****************************************************************");
             initializeCloudAgent();
         }
-
     }
 
     private void initializeCloudAgent() {
         try {
             SignatureConfig.register();
-
 
             Ed25519Sign.KeyPair signKeyPair = Ed25519Sign.KeyPair.newKeyPair();
             byte[] signPubKeyBytes = signKeyPair.getPublicKey();

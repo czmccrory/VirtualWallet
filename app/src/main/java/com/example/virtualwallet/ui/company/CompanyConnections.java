@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.virtualwallet.Login;
 import com.example.virtualwallet.MainActivity;
 import com.example.virtualwallet.R;
-import com.example.virtualwallet.StudentDetails;
 import com.example.virtualwallet.model.Connection;
 import com.example.virtualwallet.model.ConnectionRequest;
 import com.example.virtualwallet.model.ConnectionResult;
@@ -30,14 +29,11 @@ import com.example.virtualwallet.service.ListConnections;
 import com.example.virtualwallet.ui.connections.AcceptConnection;
 import com.example.virtualwallet.ui.connections.ConnectionsViewModel;
 import com.example.virtualwallet.ui.connections.ScanInvitation;
-import com.example.virtualwallet.ui.uni.UniConnections;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.crypto.tink.subtle.Base64;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +44,6 @@ public class CompanyConnections extends Fragment implements View.OnClickListener
         AcceptConnection.AcceptConnectionDialogListener, ScanInvitation.ScanInvitationListener,
         ListConnections.ListConnectionsHandler, AcceptInvitation.AcceptInvitationHandler {
 
-    private String toast;
     ConnectionsViewModel mViewModel;
 
     @Override
@@ -82,12 +77,12 @@ public class CompanyConnections extends Fragment implements View.OnClickListener
         final Observer<List<Connection>> connectionObserver = new Observer<List<Connection>>() {
             @Override
             public void onChanged(List<Connection> connections) {
-                MutableLiveData<List<Connection>> conns = mViewModel.getConnections();
+                MutableLiveData<List<Connection>> conns = mViewModel.getCompanyConnections();
                 adapter.clear();
                 adapter.addAll(Objects.requireNonNull(conns.getValue()));
             }
         };
-        mViewModel.getConnections().observe(getViewLifecycleOwner(), connectionObserver);
+        mViewModel.getCompanyConnections().observe(getViewLifecycleOwner(), connectionObserver);
 
         try {
             getConnections();
@@ -121,13 +116,13 @@ public class CompanyConnections extends Fragment implements View.OnClickListener
     }
 
     /**
-     * First checks if fragment to load is 'StudentSendDocuments.java'
-     * Replaces current fragment with Login fragment
+     * First checks if fragment to load is 'ScanInvitation'
+     * Replaces current fragment with fragment based on button clicked
      * May add current fragment to backstack, depending on what button was clicked
      * @param fragment Fragment to be displayed
      */
     public void loadFragment(Fragment fragment) {
-        if(fragment.getClass().getName().equals("com.example.virtualwallet.StudentDetails"))      {
+        if(fragment.getClass().getName().equals("com.example.virtualwallet.ui.connections.ScanInvitation"))      {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.start, fragment);
             transaction.addToBackStack(getClass().getName());
@@ -168,7 +163,7 @@ public class CompanyConnections extends Fragment implements View.OnClickListener
     @Override
     public void HandleConnections(ConnectionResult connections) {
         if (connections != null && connections.count > 0) {
-            mViewModel.getConnections().setValue(connections.connections);
+            mViewModel.getCompanyConnections().setValue(connections.connections);
         }
     }
 

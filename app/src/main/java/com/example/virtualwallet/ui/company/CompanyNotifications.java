@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.virtualwallet.Login;
 import com.example.virtualwallet.R;
-import com.example.virtualwallet.StudentDetails;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -49,10 +48,6 @@ public class CompanyNotifications extends Fragment implements View.OnClickListen
                 fragment = new Login();
                 loadFragment(fragment);
                 break;
-            case R.id.student1:
-                fragment = new StudentDetails();
-                loadFragment(fragment);
-                break;
         }
     }
 
@@ -63,17 +58,10 @@ public class CompanyNotifications extends Fragment implements View.OnClickListen
      * @param fragment Fragment to be displayed
      */
     public void loadFragment(Fragment fragment) {
-        if(fragment.getClass().getName().equals("com.example.virtualwallet.StudentDetails"))      {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.start, fragment);
-            transaction.addToBackStack(getClass().getName());
-            transaction.commit();
-        } else {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.start, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.start, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     /**

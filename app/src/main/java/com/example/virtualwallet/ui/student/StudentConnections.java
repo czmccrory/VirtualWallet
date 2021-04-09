@@ -1,6 +1,7 @@
 package com.example.virtualwallet.ui.student;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -45,13 +47,12 @@ public class StudentConnections extends Fragment implements View.OnClickListener
         AcceptConnection.AcceptConnectionDialogListener, ScanInvitation.ScanInvitationListener,
         ListConnections.ListConnectionsHandler, AcceptInvitation.AcceptInvitationHandler {
 
-    private String toast;
     ConnectionsViewModel mViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        super.onCreate(savedInstanceState);
         View mainView = inflater.inflate(R.layout.fragment_student_connections, container, false);
 
         Button back = (Button) mainView.findViewById(R.id.back);
@@ -62,39 +63,39 @@ public class StudentConnections extends Fragment implements View.OnClickListener
         logout.setOnClickListener(this);
         addConnection.setOnClickListener(this);
 
-            final ListView listview = mainView.findViewById(R.id.connectionListView);
-            MainActivity mainActivity = (MainActivity) getActivity();
-            assert mainActivity != null;
+        final ListView listview = mainView.findViewById(R.id.connectionListView);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        assert mainActivity != null;
 
-            final List<Connection> list = new ArrayList<>();
-            final ConnectionArrayAdapter adapter = new ConnectionArrayAdapter(mainActivity,
-                    android.R.layout.simple_list_item_1, list);
-            listview.setAdapter(adapter);
+        final List<Connection> list = new ArrayList<>();
+        final ConnectionArrayAdapter adapter = new ConnectionArrayAdapter(mainActivity,
+                android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);
 
-            listview.setOnItemClickListener((parent, view, position, id) -> {});
+        listview.setOnItemClickListener((parent, view, position, id) -> {});
 
-            mViewModel = new ViewModelProvider(this).get(ConnectionsViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ConnectionsViewModel.class);
 
-            final Observer<List<Connection>> connectionObserver = new Observer<List<Connection>>() {
-                @Override
-                public void onChanged(List<Connection> connections) {
-                    MutableLiveData<List<Connection>> conns = mViewModel.getConnections();
-                    adapter.clear();
-                    adapter.addAll(Objects.requireNonNull(conns.getValue()));
-                }
-            };
-            mViewModel.getConnections().observe(getViewLifecycleOwner(), connectionObserver);
-
-            try {
-                getConnections();
-            } catch (Exception e) {
-                e.printStackTrace();
+        final Observer<List<Connection>> connectionObserver = new Observer<List<Connection>>() {
+            @Override
+            public void onChanged(List<Connection> connections) {
+                MutableLiveData<List<Connection>> conns = mViewModel.getStudentConnections();
+                adapter.clear();
+                adapter.addAll(Objects.requireNonNull(conns.getValue()));
             }
+        };
+        mViewModel.getStudentConnections().observe(getViewLifecycleOwner(), connectionObserver);
+
+        try {
+            getConnections();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         mainActivity.setScanInvitationListener(this);
+
         return mainView;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -117,13 +118,13 @@ public class StudentConnections extends Fragment implements View.OnClickListener
     }
 
     /**
-     * First checks if fragment to load is 'StudentSendDocuments.java'
-     * Replaces current fragment with Login fragment
+     * First checks if fragment to load is 'ScanInvitation'
+     * Replaces current fragment with fragment based on button clicked
      * May add current fragment to backstack, depending on what button was clicked
      * @param fragment Fragment to be displayed
      */
     public void loadFragment(Fragment fragment) {
-        if(fragment.getClass().getName().equals("com.example.virtualwallet.ui.student.StudentSendDocuments.java"))      {
+        if(fragment.getClass().getName().equals("com.example.virtualwallet.ui.connections.ScanInvitation"))      {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.start, fragment);
             transaction.addToBackStack(getClass().getName());
@@ -164,7 +165,7 @@ public class StudentConnections extends Fragment implements View.OnClickListener
     @Override
     public void HandleConnections(ConnectionResult connections) {
         if (connections != null && connections.count > 0) {
-            mViewModel.getConnections().setValue(connections.connections);
+            mViewModel.getStudentConnections().setValue(connections.connections);
         }
     }
 
@@ -176,6 +177,9 @@ public class StudentConnections extends Fragment implements View.OnClickListener
 
             Invitation req = new Invitation();
             req.invitation = invitation;
+
+            System.out.println("Invitation: " + invitation);
+
             GsonBuilder gsonb = new GsonBuilder();
             Gson gson = gsonb.disableHtmlEscaping().create();
             String json = gson.toJson(req);
@@ -196,7 +200,6 @@ public class StudentConnections extends Fragment implements View.OnClickListener
     }
 
     private static class ConnectionArrayAdapter extends ArrayAdapter<Connection> {
-
         HashMap<Connection, Integer> mIdMap = new HashMap<>();
 
         public ConnectionArrayAdapter(Context context, int textViewResourceId,
@@ -248,6 +251,10 @@ public class StudentConnections extends Fragment implements View.OnClickListener
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

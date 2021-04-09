@@ -4,10 +4,11 @@ import android.os.AsyncTask;
 
 import com.example.virtualwallet.model.Invitation;
 import com.example.virtualwallet.model.InvitationResult;
-import com.example.virtualwallet.service.ApiCall;
 
 import java.io.IOException;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -30,12 +31,20 @@ public class AcceptInvitation extends AsyncTask<Invitation, Void, InvitationResu
         this.signature = signature;
     }
 
-
     @Override
     protected InvitationResult doInBackground(Invitation... invites) {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://canis.scoir.ninja/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
                 .build();
 
         ApiCall apiCall = retrofit.create(ApiCall.class);

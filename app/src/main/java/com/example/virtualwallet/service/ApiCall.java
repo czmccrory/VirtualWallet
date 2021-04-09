@@ -50,5 +50,4 @@ public interface ApiCall {
             @Path("credential_id") String credentialId,
             @Body HashMap empty
     );
-
 }
