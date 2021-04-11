@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.virtualwallet.Login;
 import com.example.virtualwallet.MainActivity;
 import com.example.virtualwallet.R;
+import com.example.virtualwallet.StudentDetails;
 import com.example.virtualwallet.model.Connection;
 import com.example.virtualwallet.model.ConnectionRequest;
 import com.example.virtualwallet.model.ConnectionResult;
@@ -71,6 +72,10 @@ public class UniConnections extends Fragment implements View.OnClickListener,
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener((parent, view, position, id) -> {
+            if(listview.getItemAtPosition(position).toString().equals("John Doe")) {
+                Fragment fragment = new StudentDetails();
+                loadFragment(fragment);
+            }
         });
 
         mViewModel = new ViewModelProvider(this).get(ConnectionsViewModel.class);
@@ -123,7 +128,8 @@ public class UniConnections extends Fragment implements View.OnClickListener,
      * @param fragment Fragment to be displayed
      */
     public void loadFragment(Fragment fragment) {
-        if(fragment.getClass().getName().equals("com.example.virtualwallet.ui.connections.ScanInvitation"))      {
+        if(fragment.getClass().getName().equals("com.example.virtualwallet.ui.connections.ScanInvitation")
+                || fragment.getClass().getName().equals("com.example.virtualwallet.StudentDetails")) {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.start, fragment);
             transaction.addToBackStack(getClass().getName());
@@ -180,11 +186,11 @@ public class UniConnections extends Fragment implements View.OnClickListener,
             Gson gson = gsonb.disableHtmlEscaping().create();
             String json = gson.toJson(req);
 
-            byte[] signature = mainActivity.Sign(json.getBytes(StandardCharsets.UTF_8));
+            byte[] signature = mainActivity.UniSign(json.getBytes(StandardCharsets.UTF_8));
 
             AcceptInvitation task = new AcceptInvitation(
                     this,
-                    mainActivity.getCloudAgentId(),
+                    mainActivity.getUniCloudAgentId(),
                     Base64.encodeToString(signature, Base64.URL_SAFE | Base64.NO_WRAP)
             );
 
@@ -236,11 +242,11 @@ public class UniConnections extends Fragment implements View.OnClickListener,
 
         List<Connection> out = new ArrayList<>();
         try {
-            byte[] signature = mainActivity.Sign(json.getBytes(StandardCharsets.UTF_8));
+            byte[] signature = mainActivity.UniSign(json.getBytes(StandardCharsets.UTF_8));
 
             ListConnections task = new ListConnections(
                     this,
-                    mainActivity.getCloudAgentId(),
+                    mainActivity.getUniCloudAgentId(),
                     Base64.encodeToString(signature, Base64.URL_SAFE | Base64.NO_WRAP)
             );
 

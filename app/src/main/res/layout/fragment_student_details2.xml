@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.student.StudentDocuments">
+    tools:context=".StudentDetails">
 
     <TextView
         android:id="@+id/studentDocs"
@@ -45,7 +45,20 @@
     <ListView
         android:id="@+id/credentialListView"
         android:layout_width="match_parent"
-        android:layout_height="530dp"
-        android:layout_below="@+id/studentDocs" />
+        android:layout_height="373dp"
+        android:layout_below="@+id/studentDocs"/>
+
+    <Button
+        android:id="@+id/Request"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginBottom="13dp"
+        android:backgroundTint="#835E76"
+        android:text="Request Document" />
 
 </RelativeLayout>

@@ -1,22 +1,26 @@
-package com.example.virtualwallet.ui.credentials;
+package com.example.virtualwallet;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.virtualwallet.Login;
 import com.example.virtualwallet.MainActivity;
 import com.example.virtualwallet.R;
 import com.example.virtualwallet.model.AcceptCredentialResult;
@@ -25,10 +29,18 @@ import com.example.virtualwallet.model.CredentialRequest;
 import com.example.virtualwallet.model.CredentialResult;
 import com.example.virtualwallet.service.AcceptCredential;
 import com.example.virtualwallet.service.ListCredentials;
+import com.example.virtualwallet.ui.company.CompanyConnections;
+import com.example.virtualwallet.ui.company.CompanyNotifications;
+import com.example.virtualwallet.ui.credentials.CredentialsViewModel;
+import com.example.virtualwallet.ui.credentials.OfferCredential;
+import com.example.virtualwallet.ui.uni.UniConnections;
+import com.example.virtualwallet.ui.uni.UniNotifications;
 import com.google.crypto.tink.subtle.Base64;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -36,25 +48,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class Credentials extends Fragment implements OfferCredential.OfferDialogListener,
-        ListCredentials.ListCredentialsHandler, AcceptCredential.AcceptCredentialHandler {
+public class StudentDetails extends Fragment implements View.OnClickListener, OfferCredential.OfferDialogListener,
+        ListCredentials.ListCredentialsHandler, AcceptCredential.AcceptCredentialHandler{
 
     private CredentialsViewModel mViewModel;
-    private Credentials.CredentialArrayAdapter adapter;
-
+    private StudentDetails.CredentialArrayAdapter adapter;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.fragment_credentials, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_student_details, container, false);
 
-        final ListView listview = root.findViewById(R.id.credentialListView);
+        Button back = (Button) view.findViewById(R.id.back);
+        Button logout = (Button) view.findViewById(R.id.logout);
+        TextView header = (TextView) view.findViewById(R.id.details);
+
+        header.setText(getDetails(view)[0]);
+
+        back.setOnClickListener(this);
+        logout.setOnClickListener(this);
+
+        final ListView listview = view.findViewById(R.id.credentialListView);
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
 
-
         final List<Credential> list = new ArrayList<>();
-        adapter = new Credentials.CredentialArrayAdapter(mainActivity,
+        adapter = new StudentDetails.CredentialArrayAdapter(mainActivity,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
@@ -68,12 +88,10 @@ public class Credentials extends Fragment implements OfferCredential.OfferDialog
                     assert mainActivity != null;
 
                     byte[] signature = new byte[0];
-                    //TODO: Change to check if student, company or uni
                     signature = mainActivity.StudentSign("{}".getBytes(StandardCharsets.UTF_8));
 
                     AcceptCredential task = new AcceptCredential(
-                            Credentials.this,
-                            //TODO: Change to check if student, company or uni
+                            StudentDetails.this,
                             mainActivity.getStudentCloudAgentId(),
                             Base64.encodeToString(signature, Base64.URL_SAFE | Base64.NO_WRAP)
                     );
@@ -105,7 +123,57 @@ public class Credentials extends Fragment implements OfferCredential.OfferDialog
             e.printStackTrace();
         }
 
-        return root;
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment;
+
+        switch(v.getId()) {
+            case R.id.back:
+                FragmentManager manager = getFragmentManager();
+
+                if (manager != null)
+                {
+                    if(manager.getBackStackEntryCount() >= 1){
+                        String topOnStack = manager.getBackStackEntryAt(manager.getBackStackEntryCount()-1).getName();
+
+                        if(topOnStack.equals("com.example.virtualwallet.ui.companyCompanyNotifications")) {
+                            fragment = new CompanyNotifications();
+                            loadFragment(fragment);
+                        }
+                        if(topOnStack.equals("com.example.virtualwallet.ui.companyCompanyConnections")) {
+                            fragment = new CompanyConnections();
+                            loadFragment(fragment);
+                        }
+                        if(topOnStack.equals("com.example.virtualwallet.ui.uni.UniConnections")) {
+                            fragment = new UniConnections();
+                            loadFragment(fragment);
+                        }
+                        if(topOnStack.equals("com.example.virtualwallet.ui.uniUniNotifications")) {
+                            fragment = new UniNotifications();
+                            loadFragment(fragment);
+                        }
+                    }
+                }
+                break;
+            case R.id.logout:
+                fragment = new Login();
+                loadFragment(fragment);
+                break;
+        }
+    }
+
+    /**
+     * Replaces current fragment with Login fragment
+     * @param fragment Fragment to be displayed
+     */
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.start, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public void onOffer(String piid, String label) {
@@ -119,12 +187,8 @@ public class Credentials extends Fragment implements OfferCredential.OfferDialog
     }
 
     @Override
-    public void onAcceptCredentialClick(String piid, String label) {
-    }
-
-    @Override
-    public void onRejecCredentialClick(DialogFragment dialog) {
-
+    public void HandleConnections(AcceptCredentialResult result) {
+        getCredentials();
     }
 
     @Override
@@ -133,10 +197,10 @@ public class Credentials extends Fragment implements OfferCredential.OfferDialog
     }
 
     @Override
-    public void HandleConnections(AcceptCredentialResult result) {
-        getCredentials();
-    }
+    public void onAcceptCredentialClick(String piid, String label) {}
 
+    @Override
+    public void onRejecCredentialClick(DialogFragment dialog) {}
 
     private static class CredentialArrayAdapter extends ArrayAdapter<Credential> {
 
@@ -163,7 +227,6 @@ public class Credentials extends Fragment implements OfferCredential.OfferDialog
             return pos;
         }
 
-
         @Override
         public boolean hasStableIds() {
             return true;
@@ -182,12 +245,10 @@ public class Credentials extends Fragment implements OfferCredential.OfferDialog
 
         List<Credential> out = new ArrayList<>();
         try {
-            //TODO: Change to check if student, company or uni
             byte[] signature = mainActivity.StudentSign(json.getBytes(StandardCharsets.UTF_8));
 
             ListCredentials task = new ListCredentials(
                     this,
-                    //TODO: Change to check if student, company or uni
                     mainActivity.getStudentCloudAgentId(),
                     Base64.encodeToString(signature, Base64.URL_SAFE | Base64.NO_WRAP)
             );
@@ -198,5 +259,30 @@ public class Credentials extends Fragment implements OfferCredential.OfferDialog
         }
     }
 
+    /**
+     * Gets details of user from file
+     * @param view current view
+     * @return Array of details (name and date of birth)
+     */
+    public String[] getDetails(View view) {
+        try {
+            FileInputStream fileIn = view.getContext().openFileInput("user_data.txt");
+            InputStreamReader InputRead = new InputStreamReader(fileIn);
 
+            char[] inputBuffer = new char[100];
+            String[] strArray = new String[100];
+            int charRead;
+
+            while ((charRead = InputRead.read(inputBuffer)) > 0) {
+                // char to string conversion
+                String readstring = String.copyValueOf(inputBuffer, 0, charRead);
+                strArray = readstring.split(";");
+            }
+            InputRead.close();
+            return strArray;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

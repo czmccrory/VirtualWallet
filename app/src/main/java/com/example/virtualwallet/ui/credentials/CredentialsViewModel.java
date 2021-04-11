@@ -3,6 +3,7 @@ package com.example.virtualwallet.ui.credentials;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.virtualwallet.model.Connection;
 import com.example.virtualwallet.model.Credential;
 
 import java.util.List;
@@ -17,5 +18,4 @@ public class CredentialsViewModel extends ViewModel {
         }
         return credentials;
     }
-
 }

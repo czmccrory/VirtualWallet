@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".StudentDetails">
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".ui.student.StudentConnections">
 
     <TextView
         android:id="@+id/details"
@@ -20,160 +19,15 @@
         android:textColor="@color/white"
         android:textSize="60dp" />
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/details"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginLeft="62dp"
-        android:layout_marginTop="50dp"
-        android:text="Name:"
-        android:textColor="@color/white"
-        android:textSize="18dp" />
-
-    <TextView
-        android:id="@+id/dob"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginLeft="62dp"
-        android:layout_marginTop="50dp"
-        android:text="Date of Birth:"
-        android:textColor="@color/white"
-        android:textSize="18dp" />
-
-    <TextView
-        android:id="@+id/uni"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dob"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="65dp"
-        android:layout_marginLeft="65dp"
-        android:layout_marginTop="50dp"
-        android:text="University:"
-        android:textColor="@color/white"
-        android:textSize="18dp" />
-
-    <TextView
-        android:id="@+id/gradYear"
-        android:layout_width="124dp"
-        android:layout_height="52dp"
-        android:layout_below="@+id/uni"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginLeft="62dp"
-        android:layout_marginTop="50dp"
-        android:text="Year of Graduation:"
-        android:textColor="@color/white"
-        android:textSize="18dp" />
-
-    <ImageView
-        android:id="@+id/degree1"
-        android:layout_width="304dp"
-        android:layout_height="114dp"
-        android:layout_below="@+id/gradYear"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
+    <ListView
+        android:id="@+id/credentialListView"
+        android:layout_width="358dp"
+        android:layout_height="511dp"
+        android:layout_below="@+id/studentConnections"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="77dp"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="24dp"
-        android:src="@drawable/blank" />
+        android:layout_marginBottom="12dp">
 
-    <TextView
-        android:id="@+id/nameText"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/details"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_toEndOf="@+id/name"
-        android:layout_toRightOf="@+id/name"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="15dp" />
-
-    <TextView
-        android:id="@+id/dobText"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/nameText"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="37dp"
-        android:layout_toEndOf="@+id/dob"
-        android:layout_toRightOf="@+id/dob"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="15dp" />
-
-    <TextView
-        android:id="@+id/uniText"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/dobText"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="55dp"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_toEndOf="@+id/uni"
-        android:layout_toRightOf="@+id/uni"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:text="University of Dundee"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        android:textSize="15dp" />
-
-    <TextView
-        android:id="@+id/gradYearNum"
-        android:layout_width="149dp"
-        android:layout_height="41dp"
-        android:layout_below="@+id/uniText"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_toEndOf="@+id/gradYear"
-        android:layout_toRightOf="@+id/gradYear"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:text="2022"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="15dp" />
+    </ListView>
 
     <Button
         android:id="@+id/back"

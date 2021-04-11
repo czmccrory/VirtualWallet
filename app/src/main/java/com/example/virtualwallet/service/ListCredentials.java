@@ -33,7 +33,7 @@ public class ListCredentials extends AsyncTask<CredentialRequest, Void, Credenti
     @Override
     protected CredentialResult doInBackground(CredentialRequest... reqs) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:11004")
+                .baseUrl("https://canis.scoir.ninja/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

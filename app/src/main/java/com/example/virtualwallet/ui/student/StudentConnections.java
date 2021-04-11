@@ -184,11 +184,11 @@ public class StudentConnections extends Fragment implements View.OnClickListener
             Gson gson = gsonb.disableHtmlEscaping().create();
             String json = gson.toJson(req);
 
-            byte[] signature = mainActivity.Sign(json.getBytes(StandardCharsets.UTF_8));
+            byte[] signature = mainActivity.StudentSign(json.getBytes(StandardCharsets.UTF_8));
 
             AcceptInvitation task = new AcceptInvitation(
                     this,
-                    mainActivity.getCloudAgentId(),
+                    mainActivity.getStudentCloudAgentId(),
                     Base64.encodeToString(signature, Base64.URL_SAFE | Base64.NO_WRAP)
             );
 
@@ -239,11 +239,11 @@ public class StudentConnections extends Fragment implements View.OnClickListener
 
         List<Connection> out = new ArrayList<>();
         try {
-            byte[] signature = mainActivity.Sign(json.getBytes(StandardCharsets.UTF_8));
+            byte[] signature = mainActivity.StudentSign(json.getBytes(StandardCharsets.UTF_8));
 
             ListConnections task = new ListConnections(
                     this,
-                    mainActivity.getCloudAgentId(),
+                    mainActivity.getStudentCloudAgentId(),
                     Base64.encodeToString(signature, Base64.URL_SAFE | Base64.NO_WRAP)
             );
 

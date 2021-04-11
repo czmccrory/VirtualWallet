@@ -19,6 +19,7 @@ import com.google.crypto.tink.subtle.Ed25519Sign;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,17 +29,24 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MainActivity extends AppCompatActivity implements RegisterActivity.RegisterHandler {
     boolean isEmpty;
-    private Ed25519Sign.KeyPair signKeyPair;
-    private Ed25519Sign.KeyPair nextKeyPair;
-    private String CloudAgentId;
-    private static String WALLET_FILE_NAME = "wallet.json";
+    private static String STUDENT_WALLET_FILE_NAME = "studentWallet.json";
+    private static String COMPANY_WALLET_FILE_NAME = "companyWallet.json";
+    private static String UNI_WALLET_FILE_NAME = "uniWallet.json";
 
     ScanInvitation.ScanInvitationListener scanInvitationListener;
 
-    private Wallet wallet;
+    private Wallet studentWallet, companyWallet, uniWallet;
+
+    ArrayList<CloudAgent> cloudAgents = new ArrayList<CloudAgent>();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -61,14 +69,45 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         Fragment fragment = new Login();
         loadFragment(fragment);
 
-        this.wallet = new Wallet();;
+        this.studentWallet = new Wallet();
+        this.companyWallet = new Wallet();
+        this.uniWallet = new Wallet();
+
+//        File student = new File(STUDENT_WALLET_FILE_NAME);
+//        File company = new File(COMPANY_WALLET_FILE_NAME);
+//        File uni = new File(UNI_WALLET_FILE_NAME);
+//
+//        if(student.exists() && company.exists() && uni.exists()) {
+//            try {
+//                InputStream in1 = this.openFileInput(STUDENT_WALLET_FILE_NAME);
+//                InputStream in2 = this.openFileInput(COMPANY_WALLET_FILE_NAME);
+//                InputStream in3 = this.openFileInput(UNI_WALLET_FILE_NAME);
+//                GsonBuilder gsonb = new GsonBuilder();
+//                Gson gson = gsonb.disableHtmlEscaping().create();
+//
+//                this.studentWallet = gson.fromJson(new InputStreamReader(in1), Wallet.class);
+//                this.companyWallet = gson.fromJson(new InputStreamReader(in2), Wallet.class);
+//                this.uniWallet = gson.fromJson(new InputStreamReader(in3), Wallet.class);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            System.out.println("*****************************************************************");
+//            System.out.println("exception finding file, initializing cloud agent");
+//            System.out.println("*****************************************************************");
+//            initializeCloudAgent();
+//        }
 
         try {
-            InputStream in = this.openFileInput(WALLET_FILE_NAME);
+            InputStream in1 = this.openFileInput(STUDENT_WALLET_FILE_NAME);
+            InputStream in2 = this.openFileInput(COMPANY_WALLET_FILE_NAME);
+            InputStream in3 = this.openFileInput(UNI_WALLET_FILE_NAME);
             GsonBuilder gsonb = new GsonBuilder();
             Gson gson = gsonb.disableHtmlEscaping().create();
 
-            this.wallet = gson.fromJson(new InputStreamReader(in), Wallet.class);
+            this.studentWallet = gson.fromJson(new InputStreamReader(in1), Wallet.class);
+            this.companyWallet = gson.fromJson(new InputStreamReader(in2), Wallet.class);
+            this.uniWallet = gson.fromJson(new InputStreamReader(in3), Wallet.class);
         } catch (FileNotFoundException e) {
             System.out.println("*****************************************************************");
             System.out.println("exception finding file, initializing cloud agent");
@@ -81,34 +120,71 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         try {
             SignatureConfig.register();
 
-            Ed25519Sign.KeyPair signKeyPair = Ed25519Sign.KeyPair.newKeyPair();
-            byte[] signPubKeyBytes = signKeyPair.getPublicKey();
-            byte[] signPrivKeyBytes = signKeyPair.getPrivateKey();
+            Ed25519Sign.KeyPair signStudentKeyPair = Ed25519Sign.KeyPair.newKeyPair();
+            byte[] signStudentPubKeyBytes = signStudentKeyPair.getPublicKey();
+            byte[] signStudentPrivKeyBytes = signStudentKeyPair.getPrivateKey();
 
-            Ed25519Sign.KeyPair nextKeyPair = Ed25519Sign.KeyPair.newKeyPair();
-            byte[] nextPubKeyBytes = nextKeyPair.getPublicKey();
-            byte[] nextPrivKeyBytes = nextKeyPair.getPrivateKey();
+            Ed25519Sign.KeyPair nextStudentKeyPair = Ed25519Sign.KeyPair.newKeyPair();
+            byte[] nextStudentPubKeyBytes = nextStudentKeyPair.getPublicKey();
+            byte[] nextStudentPrivKeyBytes = nextStudentKeyPair.getPrivateKey();
 
-            this.wallet.publicSigningKey = Base64.encodeToString(signPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
-            this.wallet.publicNextKey = Base64.encodeToString(nextPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.studentWallet.publicSigningKey = Base64.encodeToString(signStudentPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.studentWallet.publicNextKey = Base64.encodeToString(nextStudentPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.studentWallet.privateSigningKey = Base64.encodeToString(signStudentPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.studentWallet.privateNextKey = Base64.encodeToString(nextStudentPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
 
-            this.wallet.privateSigningKey = Base64.encodeToString(signPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
-            this.wallet.privateNextKey = Base64.encodeToString(nextPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            Ed25519Sign.KeyPair signCompanyKeyPair = Ed25519Sign.KeyPair.newKeyPair();
+            byte[] signCompanyPubKeyBytes = signCompanyKeyPair.getPublicKey();
+            byte[] signCompanyPrivKeyBytes = signCompanyKeyPair.getPrivateKey();
 
-            Registration reg = new Registration(
-                    this.wallet.publicSigningKey,
-                    this.wallet.publicNextKey,
-                    "ArwXoACJgOleVZ2PY7kXn7rA0II0mHYDhc6WrBH8fDAc"
-            );
+            Ed25519Sign.KeyPair nextCompanyKeyPair = Ed25519Sign.KeyPair.newKeyPair();
+            byte[] nextCompanyPubKeyBytes = nextCompanyKeyPair.getPublicKey();
+            byte[] nextCompanyPrivKeyBytes = nextCompanyKeyPair.getPrivateKey();
 
-            RegisterActivity task = new RegisterActivity(this);
-            task.execute(reg);
+            this.companyWallet.publicSigningKey = Base64.encodeToString(signCompanyPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.companyWallet.publicNextKey = Base64.encodeToString(nextCompanyPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.companyWallet.privateSigningKey = Base64.encodeToString(signCompanyPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.companyWallet.privateNextKey = Base64.encodeToString(nextCompanyPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
 
+            Ed25519Sign.KeyPair signUniKeyPair = Ed25519Sign.KeyPair.newKeyPair();
+            byte[] signUniPubKeyBytes = signUniKeyPair.getPublicKey();
+            byte[] signUniPrivKeyBytes = signUniKeyPair.getPrivateKey();
+
+            Ed25519Sign.KeyPair nextUniKeyPair = Ed25519Sign.KeyPair.newKeyPair();
+            byte[] nextUniPubKeyBytes = nextUniKeyPair.getPublicKey();
+            byte[] nextUniPrivKeyBytes = nextUniKeyPair.getPrivateKey();
+
+            this.uniWallet.publicSigningKey = Base64.encodeToString(signUniPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.uniWallet.publicNextKey = Base64.encodeToString(nextUniPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.uniWallet.privateSigningKey = Base64.encodeToString(signUniPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+            this.uniWallet.privateNextKey = Base64.encodeToString(nextUniPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
+
+            Wallet[] wallets = {studentWallet, companyWallet, uniWallet};
+            Register(wallets);
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }
     }
 
+    ReentrantLock lock = new ReentrantLock();
+
+    void Register(Wallet[] wallets) {
+        for (int i = 0; i < wallets.length; i++) {
+            lock.lock();
+            try {
+                Registration reg = new Registration(
+                        wallets[i].publicSigningKey,
+                        wallets[i].publicNextKey,
+                        "ArwXoACJgOleVZ2PY7kXn7rA0II0mHYDhc6WrBH8fDAc"
+                );
+
+                RegisterActivity task = new RegisterActivity(this);
+                task.execute(reg);
+            } finally{
+                lock.unlock();
+            }
+        }
+    }
 
     /**
      * Replaces current fragment with Login fragment
@@ -119,24 +195,6 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         transaction.replace(R.id.start, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
-
-    @Override
-    public void HandleCloudAgent(CloudAgent cloudAgent) {
-        this.wallet.cloudAgentId = cloudAgent.cloudAgentId;
-
-        GsonBuilder gsonb = new GsonBuilder();
-        Gson gson = gsonb.disableHtmlEscaping().create();
-        String json = gson.toJson(this.wallet);
-
-        try {
-            OutputStream out = this.openFileOutput(WALLET_FILE_NAME, MODE_APPEND);
-            out.write(json.getBytes());
-            out.flush();
-            out.close();
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -186,6 +244,49 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         }
     }
 
+    @Override
+    public void HandleCloudAgent(CloudAgent cloudAgent) {
+        for(int x=0; x<3; x++) {
+            cloudAgents.add(cloudAgent);
+        }
+
+        Set<CloudAgent> set = new HashSet<>(cloudAgents);
+
+        if(set.size() == 3) {
+            cloudAgents.clear();
+            cloudAgents.addAll(set);
+
+            this.studentWallet.cloudAgentId = cloudAgents.get(0).cloudAgentId;
+            this.companyWallet.cloudAgentId = cloudAgents.get(1).cloudAgentId;
+            this.uniWallet.cloudAgentId = cloudAgents.get(2).cloudAgentId;
+
+            GsonBuilder gsonb = new GsonBuilder();
+            Gson gson = gsonb.disableHtmlEscaping().create();
+            String json1 = gson.toJson(this.studentWallet);
+            String json2 = gson.toJson(this.companyWallet);
+            String json3 = gson.toJson(this.uniWallet);
+
+            try {
+                OutputStream out1 = this.openFileOutput(STUDENT_WALLET_FILE_NAME, MODE_APPEND);
+                out1.write(json1.getBytes());
+                out1.flush();
+                out1.close();
+
+                OutputStream out2 = this.openFileOutput(COMPANY_WALLET_FILE_NAME, MODE_APPEND);
+                out2.write(json2.getBytes());
+                out2.flush();
+                out2.close();
+
+                OutputStream out3 = this.openFileOutput(UNI_WALLET_FILE_NAME, MODE_APPEND);
+                out3.write(json3.getBytes());
+                out3.flush();
+                out3.close();
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void setScanInvitationListener(ScanInvitation.ScanInvitationListener scanInvitationListener) {
         this.scanInvitationListener = scanInvitationListener;
     }
@@ -194,14 +295,34 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         return scanInvitationListener;
     }
 
-    public byte[] Sign(byte[] data) throws GeneralSecurityException {
-        byte[] privKey = Base64.decode(this.wallet.privateSigningKey, Base64.DEFAULT | Base64.NO_WRAP);
+    public byte[] StudentSign(byte[] data) throws GeneralSecurityException {
+        byte[] privKey = Base64.decode(this.studentWallet.privateSigningKey, Base64.DEFAULT | Base64.NO_WRAP);
         Ed25519Sign signer = new Ed25519Sign(privKey);
         return signer.sign(data);
     }
 
-    public String getCloudAgentId() {
-        return this.wallet.cloudAgentId;
+    public byte[] CompanySign(byte[] data) throws GeneralSecurityException {
+        byte[] privKey = Base64.decode(this.companyWallet.privateSigningKey, Base64.DEFAULT | Base64.NO_WRAP);
+        Ed25519Sign signer = new Ed25519Sign(privKey);
+        return signer.sign(data);
+    }
+
+    public byte[] UniSign(byte[] data) throws GeneralSecurityException {
+        byte[] privKey = Base64.decode(this.uniWallet.privateSigningKey, Base64.DEFAULT | Base64.NO_WRAP);
+        Ed25519Sign signer = new Ed25519Sign(privKey);
+        return signer.sign(data);
+    }
+
+    public String getStudentCloudAgentId() {
+        return this.studentWallet.cloudAgentId;
+    }
+
+    public String getCompanyCloudAgentId() {
+        return this.companyWallet.cloudAgentId;
+    }
+
+    public String getUniCloudAgentId() {
+        return this.uniWallet.cloudAgentId;
     }
 }
 

@@ -66,7 +66,6 @@ public class ScanInvitation extends Fragment {
             } else {
                 Toast.makeText(getContext(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();
                 qrCode = result.getContents();
-
                 if (listener != null) {
                     FragmentManager manager = getFragmentManager();
                     Fragment fragment;

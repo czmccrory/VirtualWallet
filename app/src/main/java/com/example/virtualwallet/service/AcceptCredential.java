@@ -8,6 +8,8 @@ import com.example.virtualwallet.model.Credential;
 import java.io.IOException;
 import java.util.HashMap;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -30,12 +32,20 @@ public class AcceptCredential extends AsyncTask<Credential, Void, AcceptCredenti
         this.signature = signature;
     }
 
-
     @Override
     protected AcceptCredentialResult doInBackground(Credential... creds) {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:11004")
+                .baseUrl("https://canis.scoir.ninja/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
                 .build();
 
         ApiCall apiCall = retrofit.create(ApiCall.class);

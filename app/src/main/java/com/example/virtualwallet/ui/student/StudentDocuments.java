@@ -77,11 +77,11 @@ public class StudentDocuments extends Fragment implements View.OnClickListener, 
                     assert mainActivity != null;
 
                     byte[] signature = new byte[0];
-                    signature = mainActivity.Sign("{}".getBytes(StandardCharsets.UTF_8));
+                    signature = mainActivity.StudentSign("{}".getBytes(StandardCharsets.UTF_8));
 
                     AcceptCredential task = new AcceptCredential(
                             StudentDocuments.this,
-                            mainActivity.getCloudAgentId(),
+                            mainActivity.getStudentCloudAgentId(),
                             Base64.encodeToString(signature, Base64.URL_SAFE | Base64.NO_WRAP)
                     );
 
@@ -211,11 +211,11 @@ public class StudentDocuments extends Fragment implements View.OnClickListener, 
 
         List<Credential> out = new ArrayList<>();
         try {
-            byte[] signature = mainActivity.Sign(json.getBytes(StandardCharsets.UTF_8));
+            byte[] signature = mainActivity.StudentSign(json.getBytes(StandardCharsets.UTF_8));
 
             ListCredentials task = new ListCredentials(
                     this,
-                    mainActivity.getCloudAgentId(),
+                    mainActivity.getStudentCloudAgentId(),
                     Base64.encodeToString(signature, Base64.URL_SAFE | Base64.NO_WRAP)
             );
 

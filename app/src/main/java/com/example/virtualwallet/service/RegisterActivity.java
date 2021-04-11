@@ -7,6 +7,8 @@ import com.example.virtualwallet.model.Registration;
 import com.example.virtualwallet.service.ApiCall;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantLock;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -16,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegisterActivity extends AsyncTask<Registration, Void, CloudAgent> {
 
     public interface RegisterHandler {
-        void HandleCloudAgent(CloudAgent cloudAgent);
+        void HandleCloudAgent(CloudAgent cloudAgents);
     }
 
     private final RegisterHandler handler;
@@ -56,6 +58,14 @@ public class RegisterActivity extends AsyncTask<Registration, Void, CloudAgent> 
     @Override
     protected void onPostExecute(CloudAgent cloudAgent) {
         super.onPostExecute(cloudAgent);
-        handler.HandleCloudAgent(cloudAgent);
+
+        ReentrantLock lock = new ReentrantLock();
+
+        lock.lock();
+        try {
+            handler.HandleCloudAgent(cloudAgent);
+        } finally {
+            lock.unlock();
+        }
     }
 }
