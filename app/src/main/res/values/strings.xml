@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">VirtualWallet</string>
+    <string name="title_connections">Connections</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="qr_code_found">QR Code Found</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_credentials">Credentials</string>
+    <string name="accept_credential">Accept Credential?</string>
+    <string name="accept">Accept</string>
+    <string name="scan_qrcode_invitation">Scan QR Code Invitation</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
