@@ -36,17 +36,18 @@ public class StudentNotifications extends Fragment implements View.OnClickListen
 
         switch(v.getId()) {
             case R.id.back:
-                fragment = new StudentMain();
+                fragment = new StudentHome();
                 loadFragment(fragment);
                 break;
             case R.id.logout:
                 fragment = new Login();
                 loadFragment(fragment);
                 break;
-            case R.id.NCR:
-                fragment = new StudentSendDocuments();
-                loadFragment(fragment);
-                break;
+//            case R.id.NCR:
+//                //TODO: Get rid of this? Change to a different method?
+//                fragment = new StudentSendDocuments();
+//                loadFragment(fragment);
+//                break;
         }
     }
 

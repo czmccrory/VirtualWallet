@@ -12,15 +12,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.virtualwallet.Login;
 import com.example.virtualwallet.R;
 
-public class StudentMain extends Fragment implements View.OnClickListener{
+public class StudentHome extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_student_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_home, container, false);
 
         Button logout = (Button) view.findViewById(R.id.logout);
-        Button studentDocuments = (Button) view.findViewById(R.id.studentDocuments);
+        Button studentDocuments = (Button) view.findViewById(R.id.myCredentials);
         Button studentNotifications = (Button) view.findViewById(R.id.studentNotifications);
         Button studentConnections = (Button) view.findViewById(R.id.studentConnections);
         Button myDetails = (Button) view.findViewById(R.id.myDetails);
@@ -43,8 +43,8 @@ public class StudentMain extends Fragment implements View.OnClickListener{
                 fragment = new Login();
                 loadFragment(fragment);
                 break;
-            case R.id.studentDocuments:
-                fragment = new StudentDocuments();
+            case R.id.myCredentials:
+                fragment = new MyCredentials();
                 loadFragment(fragment);
                 break;
             case R.id.studentNotifications:

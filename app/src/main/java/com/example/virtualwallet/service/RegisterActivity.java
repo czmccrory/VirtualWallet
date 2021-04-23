@@ -7,7 +7,6 @@ import com.example.virtualwallet.model.Registration;
 import com.example.virtualwallet.service.ApiCall;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import retrofit2.Call;
@@ -29,7 +28,6 @@ public class RegisterActivity extends AsyncTask<Registration, Void, CloudAgent> 
 
     @Override
     protected CloudAgent doInBackground(Registration... registrations) {
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://canis.scoir.ninja/")
                 .addConverterFactory(GsonConverterFactory.create())

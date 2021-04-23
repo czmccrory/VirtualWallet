@@ -20,14 +20,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-public class EditMyDetails extends Fragment implements View.OnClickListener{
+public class EditDetails extends Fragment implements View.OnClickListener{
     EditText editName, editDob;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_edit_my_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_details, container, false);
 
         Button back = (Button) view.findViewById(R.id.back);
         Button logout = (Button) view.findViewById(R.id.logout);

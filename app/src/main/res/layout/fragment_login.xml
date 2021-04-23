@@ -69,5 +69,4 @@
         android:textSize="15dp"
         app:backgroundTint="#835E76" />
 
-
 </RelativeLayout>

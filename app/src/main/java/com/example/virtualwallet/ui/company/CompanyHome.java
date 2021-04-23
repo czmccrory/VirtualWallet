@@ -12,12 +12,12 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.virtualwallet.Login;
 import com.example.virtualwallet.R;
 
-public class CompanyMain extends Fragment implements  View.OnClickListener{
+public class CompanyHome extends Fragment implements  View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_company_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_company_home, container, false);
 
         Button logout = (Button) view.findViewById(R.id.logout);
         Button companyNotifications = (Button) view.findViewById(R.id.companyNotifications);

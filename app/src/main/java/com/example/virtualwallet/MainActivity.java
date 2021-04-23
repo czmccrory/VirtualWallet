@@ -19,7 +19,6 @@ import com.google.crypto.tink.subtle.Ed25519Sign;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -31,8 +30,6 @@ import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -72,31 +69,6 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         this.studentWallet = new Wallet();
         this.companyWallet = new Wallet();
         this.uniWallet = new Wallet();
-
-//        File student = new File(STUDENT_WALLET_FILE_NAME);
-//        File company = new File(COMPANY_WALLET_FILE_NAME);
-//        File uni = new File(UNI_WALLET_FILE_NAME);
-//
-//        if(student.exists() && company.exists() && uni.exists()) {
-//            try {
-//                InputStream in1 = this.openFileInput(STUDENT_WALLET_FILE_NAME);
-//                InputStream in2 = this.openFileInput(COMPANY_WALLET_FILE_NAME);
-//                InputStream in3 = this.openFileInput(UNI_WALLET_FILE_NAME);
-//                GsonBuilder gsonb = new GsonBuilder();
-//                Gson gson = gsonb.disableHtmlEscaping().create();
-//
-//                this.studentWallet = gson.fromJson(new InputStreamReader(in1), Wallet.class);
-//                this.companyWallet = gson.fromJson(new InputStreamReader(in2), Wallet.class);
-//                this.uniWallet = gson.fromJson(new InputStreamReader(in3), Wallet.class);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            System.out.println("*****************************************************************");
-//            System.out.println("exception finding file, initializing cloud agent");
-//            System.out.println("*****************************************************************");
-//            initializeCloudAgent();
-//        }
 
         try {
             InputStream in1 = this.openFileInput(STUDENT_WALLET_FILE_NAME);

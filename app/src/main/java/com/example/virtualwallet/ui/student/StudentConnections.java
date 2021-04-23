@@ -18,6 +18,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.virtualwallet.model.CloudAgent;
 import com.example.virtualwallet.service.AcceptInvitation;
 import com.example.virtualwallet.Login;
 import com.example.virtualwallet.MainActivity;
@@ -36,8 +37,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.google.crypto.tink.subtle.Base64;
 import com.google.gson.Gson;
@@ -103,7 +106,7 @@ public class StudentConnections extends Fragment implements View.OnClickListener
 
         switch(v.getId()) {
             case R.id.back:
-                fragment = new StudentMain();
+                fragment = new StudentHome();
                 loadFragment(fragment);
                 break;
             case R.id.logout:

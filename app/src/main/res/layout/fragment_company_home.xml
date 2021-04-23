@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.company.CompanyMain">
+    tools:context=".ui.company.CompanyHome">
 
     <TextView
         android:id="@+id/companyMain"
@@ -30,7 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="170dp"
+        android:layout_marginBottom="180dp"
         android:backgroundTint="#835E76"
         android:text="Connections" />
 

@@ -44,6 +44,7 @@ public class ScanInvitation extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_scan_connection, container, false);
 
+        //Launches intent with customised options
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         integrator.setOrientationLocked(false);
         integrator.setPrompt("Scan a barcode");

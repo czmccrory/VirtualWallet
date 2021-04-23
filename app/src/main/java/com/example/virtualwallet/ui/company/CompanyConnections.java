@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -20,7 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.virtualwallet.Login;
 import com.example.virtualwallet.MainActivity;
 import com.example.virtualwallet.R;
-import com.example.virtualwallet.StudentDetails;
+import com.example.virtualwallet.StudentCredentials;
 import com.example.virtualwallet.model.Connection;
 import com.example.virtualwallet.model.ConnectionRequest;
 import com.example.virtualwallet.model.ConnectionResult;
@@ -72,8 +71,9 @@ public class CompanyConnections extends Fragment implements View.OnClickListener
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener((parent, view, position, id) -> {
+            //TODO: Change name based on user's details
             if(listview.getItemAtPosition(position).toString().equals("John Doe")) {
-                Fragment fragment = new StudentDetails();
+                Fragment fragment = new StudentCredentials();
                 loadFragment(fragment);
             }
         });
@@ -107,7 +107,7 @@ public class CompanyConnections extends Fragment implements View.OnClickListener
 
         switch(v.getId()) {
             case R.id.back:
-                fragment = new CompanyMain();
+                fragment = new CompanyHome();
                 loadFragment(fragment);
                 break;
             case R.id.logout:
@@ -129,7 +129,7 @@ public class CompanyConnections extends Fragment implements View.OnClickListener
      */
     public void loadFragment(Fragment fragment) {
         if(fragment.getClass().getName().equals("com.example.virtualwallet.ui.connections.ScanInvitation")
-        || fragment.getClass().getName().equals("com.example.virtualwallet.StudentDetails")) {
+        || fragment.getClass().getName().equals("com.example.virtualwallet.StudentCredentials")) {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.start, fragment);
             transaction.addToBackStack(getClass().getName());

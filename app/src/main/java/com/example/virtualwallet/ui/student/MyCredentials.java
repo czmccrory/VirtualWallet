@@ -1,4 +1,4 @@
-package com.example.virtualwallet;
+package com.example.virtualwallet.ui.student;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,11 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -29,18 +27,12 @@ import com.example.virtualwallet.model.CredentialRequest;
 import com.example.virtualwallet.model.CredentialResult;
 import com.example.virtualwallet.service.AcceptCredential;
 import com.example.virtualwallet.service.ListCredentials;
-import com.example.virtualwallet.ui.company.CompanyConnections;
-import com.example.virtualwallet.ui.company.CompanyNotifications;
 import com.example.virtualwallet.ui.credentials.CredentialsViewModel;
 import com.example.virtualwallet.ui.credentials.OfferCredential;
-import com.example.virtualwallet.ui.uni.UniConnections;
-import com.example.virtualwallet.ui.uni.UniNotifications;
 import com.google.crypto.tink.subtle.Base64;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -48,23 +40,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class StudentDetails extends Fragment implements View.OnClickListener, OfferCredential.OfferDialogListener,
+public class MyCredentials extends Fragment implements View.OnClickListener, OfferCredential.OfferDialogListener,
         ListCredentials.ListCredentialsHandler, AcceptCredential.AcceptCredentialHandler{
 
     private CredentialsViewModel mViewModel;
-    private StudentDetails.CredentialArrayAdapter adapter;
+    private MyCredentials.CredentialArrayAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_student_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_credentials, container, false);
 
         Button back = (Button) view.findViewById(R.id.back);
         Button logout = (Button) view.findViewById(R.id.logout);
-        TextView header = (TextView) view.findViewById(R.id.details);
-
-        header.setText(getDetails(view)[0]);
 
         back.setOnClickListener(this);
         logout.setOnClickListener(this);
@@ -74,7 +63,7 @@ public class StudentDetails extends Fragment implements View.OnClickListener, Of
         assert mainActivity != null;
 
         final List<Credential> list = new ArrayList<>();
-        adapter = new StudentDetails.CredentialArrayAdapter(mainActivity,
+        adapter = new MyCredentials.CredentialArrayAdapter(mainActivity,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
@@ -91,7 +80,7 @@ public class StudentDetails extends Fragment implements View.OnClickListener, Of
                     signature = mainActivity.StudentSign("{}".getBytes(StandardCharsets.UTF_8));
 
                     AcceptCredential task = new AcceptCredential(
-                            StudentDetails.this,
+                            MyCredentials.this,
                             mainActivity.getStudentCloudAgentId(),
                             Base64.encodeToString(signature, Base64.URL_SAFE | Base64.NO_WRAP)
                     );
@@ -132,31 +121,8 @@ public class StudentDetails extends Fragment implements View.OnClickListener, Of
 
         switch(v.getId()) {
             case R.id.back:
-                FragmentManager manager = getFragmentManager();
-
-                if (manager != null)
-                {
-                    if(manager.getBackStackEntryCount() >= 1){
-                        String topOnStack = manager.getBackStackEntryAt(manager.getBackStackEntryCount()-1).getName();
-
-                        if(topOnStack.equals("com.example.virtualwallet.ui.companyCompanyNotifications")) {
-                            fragment = new CompanyNotifications();
-                            loadFragment(fragment);
-                        }
-                        if(topOnStack.equals("com.example.virtualwallet.ui.companyCompanyConnections")) {
-                            fragment = new CompanyConnections();
-                            loadFragment(fragment);
-                        }
-                        if(topOnStack.equals("com.example.virtualwallet.ui.uni.UniConnections")) {
-                            fragment = new UniConnections();
-                            loadFragment(fragment);
-                        }
-                        if(topOnStack.equals("com.example.virtualwallet.ui.uniUniNotifications")) {
-                            fragment = new UniNotifications();
-                            loadFragment(fragment);
-                        }
-                    }
-                }
+                fragment = new StudentHome();
+                loadFragment(fragment);
                 break;
             case R.id.logout:
                 fragment = new Login();
@@ -256,33 +222,6 @@ public class StudentDetails extends Fragment implements View.OnClickListener, Of
             task.execute(req);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Gets details of user from file
-     * @param view current view
-     * @return Array of details (name and date of birth)
-     */
-    public String[] getDetails(View view) {
-        try {
-            FileInputStream fileIn = view.getContext().openFileInput("user_data.txt");
-            InputStreamReader InputRead = new InputStreamReader(fileIn);
-
-            char[] inputBuffer = new char[100];
-            String[] strArray = new String[100];
-            int charRead;
-
-            while ((charRead = InputRead.read(inputBuffer)) > 0) {
-                // char to string conversion
-                String readstring = String.copyValueOf(inputBuffer, 0, charRead);
-                strArray = readstring.split(";");
-            }
-            InputRead.close();
-            return strArray;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 }

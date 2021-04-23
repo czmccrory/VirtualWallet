@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.virtualwallet.Login;
 import com.example.virtualwallet.R;
+import com.example.virtualwallet.StudentCredentials;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -42,7 +43,7 @@ public class UniNotifications extends Fragment implements View.OnClickListener {
 
         switch(v.getId()) {
             case R.id.back:
-                fragment = new UniMain();
+                fragment = new UniHome();
                 loadFragment(fragment);
                 break;
             case R.id.logout:
@@ -50,7 +51,7 @@ public class UniNotifications extends Fragment implements View.OnClickListener {
                 loadFragment(fragment);
                 break;
             case R.id.student1:
-                fragment = new UniSendDocuments();
+                fragment = new StudentCredentials();
                 loadFragment(fragment);
                 break;
         }
@@ -63,7 +64,7 @@ public class UniNotifications extends Fragment implements View.OnClickListener {
      * @param fragment Fragment to be displayed
      */
     public void loadFragment(Fragment fragment) {
-        if(fragment.getClass().getName().equals("com.example.virtualwallet.StudentDetails"))      {
+        if(fragment.getClass().getName().equals("com.example.virtualwallet.StudentCredentials"))      {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.start, fragment);
             transaction.addToBackStack(getClass().getName());

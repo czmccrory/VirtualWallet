@@ -12,9 +12,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.virtualwallet.ui.company.CompanyMain;
-import com.example.virtualwallet.ui.student.StudentMain;
-import com.example.virtualwallet.ui.uni.UniMain;
+import com.example.virtualwallet.ui.company.CompanyHome;
+import com.example.virtualwallet.ui.student.StudentHome;
+import com.example.virtualwallet.ui.uni.UniHome;
 
 import java.security.MessageDigest;
 
@@ -57,34 +57,21 @@ public class Login extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-
         String username = hash(uNameEditTxt.getText().toString());
         String password = hash(pswdEditTxt.getText().toString());
         Fragment fragment;
 
         //Checks user input
         //Displays a message if incorrect username and/or password was entered
-        if(username.equals(hash("JohnDoe123"))) {
-            if(password.equals(hash("Student123"))) {
-                fragment = new StudentMain();
-                loadFragment(fragment);
-            } else {
-                Toast.makeText(getContext(), "Incorrect username or password. Please try again.", Toast.LENGTH_SHORT).show();
-            }
-        } else if(username.equals(hash("jsUoD"))) {
-            if(password.equals(hash("Uni123"))) {
-                fragment = new UniMain();
-                loadFragment(fragment);
-            } else {
-                Toast.makeText(getContext(), "Incorrect username or password. Please try again.", Toast.LENGTH_SHORT).show();
-            }
-        } else if(username.equals(hash("poNCR"))) {
-            if(password.equals(hash("NCR123"))) {
-                fragment = new CompanyMain();
-                loadFragment(fragment);
-            } else {
-                Toast.makeText(getContext(), "Incorrect username or password. Please try again.", Toast.LENGTH_SHORT).show();
-            }
+        if(username.equals(hash("JohnDoe123")) && password.equals(hash("Student123"))) {
+            fragment = new StudentHome();
+            loadFragment(fragment);
+        } else if(username.equals(hash("jsUoD")) && password.equals(hash("Uni123"))) {
+            fragment = new UniHome();
+            loadFragment(fragment);
+        } else if(username.equals(hash("poNCR")) && password.equals(hash("NCR123"))) {
+            fragment = new CompanyHome();
+            loadFragment(fragment);
         } else {
             Toast.makeText(getContext(), "Incorrect username or password. Please try again.", Toast.LENGTH_SHORT).show();
         }

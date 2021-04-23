@@ -46,7 +46,7 @@ public class MyDetails extends Fragment implements View.OnClickListener{
 
         switch(v.getId()) {
             case R.id.back:
-                fragment = new StudentMain();
+                fragment = new StudentHome();
                 loadFragment(fragment);
                 break;
             case R.id.logout:
@@ -54,7 +54,7 @@ public class MyDetails extends Fragment implements View.OnClickListener{
                 loadFragment(fragment);
                 break;
             case R.id.editBtn:
-                fragment = new EditMyDetails();
+                fragment = new EditDetails();
                 loadFragment(fragment);
                 break;
         }

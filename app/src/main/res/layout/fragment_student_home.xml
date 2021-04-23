@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.student.StudentMain">
+    tools:context=".ui.student.StudentHome">
 
     <TextView
         android:id="@+id/studentMain"
@@ -14,20 +14,20 @@
         android:background="#463CB7AC" />
 
     <Button
-        android:id="@+id/studentDocuments"
+        android:id="@+id/myCredentials"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_below="@+id/studentMain"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:backgroundTint="#835E76"
-        android:text="Documents" />
+        android:text="Credentials" />
 
     <Button
         android:id="@+id/studentNotifications"
         android:layout_width="250dp"
         android:layout_height="70dp"
-        android:layout_below="@+id/studentDocuments"
+        android:layout_below="@+id/myCredentials"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:backgroundTint="#835E76"

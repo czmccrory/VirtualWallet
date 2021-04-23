@@ -29,7 +29,6 @@ public class ListCredentials extends AsyncTask<CredentialRequest, Void, Credenti
         this.signature = signature;
     }
 
-
     @Override
     protected CredentialResult doInBackground(CredentialRequest... reqs) {
         Retrofit retrofit = new Retrofit.Builder()
