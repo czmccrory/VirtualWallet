@@ -43,11 +43,6 @@ public class StudentNotifications extends Fragment implements View.OnClickListen
                 fragment = new Login();
                 loadFragment(fragment);
                 break;
-//            case R.id.NCR:
-//                //TODO: Get rid of this? Change to a different method?
-//                fragment = new StudentSendDocuments();
-//                loadFragment(fragment);
-//                break;
         }
     }
 

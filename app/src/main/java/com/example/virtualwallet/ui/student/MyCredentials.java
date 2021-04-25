@@ -62,11 +62,13 @@ public class MyCredentials extends Fragment implements View.OnClickListener, Off
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
 
+        //Creates a new ArrayList that holds all user credentials
         final List<Credential> list = new ArrayList<>();
         adapter = new MyCredentials.CredentialArrayAdapter(mainActivity,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
+        //Accepts credential
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
@@ -95,6 +97,7 @@ public class MyCredentials extends Fragment implements View.OnClickListener, Off
 
         mViewModel = new ViewModelProvider(this).get(CredentialsViewModel.class);
 
+        //Lists credential
         final Observer<List<Credential>> credentialObserver = new Observer<List<Credential>>() {
             @Override
             public void onChanged(List<Credential> credentials) {
@@ -104,7 +107,6 @@ public class MyCredentials extends Fragment implements View.OnClickListener, Off
             }
         };
         mViewModel.getCredentials().observe(getViewLifecycleOwner(), credentialObserver);
-
 
         try {
             getCredentials();
@@ -142,12 +144,22 @@ public class MyCredentials extends Fragment implements View.OnClickListener, Off
         transaction.commit();
     }
 
+    /**
+     * Displays an option to accept or reject a credential being offered
+     * (This is not fully implemented due to problems with layout)
+     * @param piid  Piid of credential being issued/offered
+     * @param label Label of credential being issued/offered
+     */
     public void onOffer(String piid, String label) {
         DialogFragment offerFrag = new OfferCredential(piid, label);
         offerFrag.setTargetFragment(this, 0);
         offerFrag.show(getParentFragmentManager(), "offers");
     }
 
+    /**
+     * Displays accepted credential in Credentials list
+     * @param piid Piid of credential being issued/offered
+     */
     public void accepted(String piid) {
         getCredentials();
     }
@@ -157,6 +169,12 @@ public class MyCredentials extends Fragment implements View.OnClickListener, Off
         getCredentials();
     }
 
+    /**
+     * Checks if the list of credentials is empty
+     * If not, gets the details of each credential and them saves to
+     * their allocated details in the Credential skeleton
+     * @param result Result of "List Credentials" API call
+     */
     @Override
     public void HandleCredentials(CredentialResult result) {
         if(result != null) {
@@ -174,6 +192,7 @@ public class MyCredentials extends Fragment implements View.OnClickListener, Off
 
         HashMap<Credential, Integer> mIdMap = new HashMap<>();
 
+        //Adds credential to list
         public CredentialArrayAdapter(Context context, int textViewResourceId,
                                       List<Credential> objects) {
             super(context, textViewResourceId, objects);
@@ -184,6 +203,7 @@ public class MyCredentials extends Fragment implements View.OnClickListener, Off
             }
         }
 
+        //Gets the item at position clicked
         @Override
         public long getItemId(int position) {
             Credential item = getItem(position);
@@ -201,8 +221,10 @@ public class MyCredentials extends Fragment implements View.OnClickListener, Off
         }
     }
 
+    /**
+     * Gets credentials from API by calling the "List Credentials" class
+     */
     public void getCredentials() {
-
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
 

@@ -32,6 +32,7 @@ public class AcceptCredential extends AsyncTask<Credential, Void, AcceptCredenti
 
     @Override
     protected AcceptCredentialResult doInBackground(Credential... creds) {
+        //Generates the Accept Credential Interface
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://canis.scoir.ninja/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -39,6 +40,7 @@ public class AcceptCredential extends AsyncTask<Credential, Void, AcceptCredenti
 
         ApiCall apiCall = retrofit.create(ApiCall.class);
 
+        //Http request to the remote webserver
         Call<AcceptCredentialResult> call = apiCall.AcceptCredential(this.cloudAgentId, this.signature, creds[0].id, new HashMap());
         try {
             Response<AcceptCredentialResult> resp = call.execute();

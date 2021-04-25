@@ -66,11 +66,13 @@ public class UniConnections extends Fragment implements View.OnClickListener,
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
 
+        //Creates a new ArrayList that holds all user connections
         final List<Connection> list = new ArrayList<>();
         final UniConnections.ConnectionArrayAdapter adapter = new UniConnections.ConnectionArrayAdapter(mainActivity,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
+        //Checks if an item in the list is clicked on
         listview.setOnItemClickListener((parent, view, position, id) -> {
             if(listview.getItemAtPosition(position).toString().equals("John Doe")) {
                 Fragment fragment = new StudentCredentials();
@@ -80,6 +82,7 @@ public class UniConnections extends Fragment implements View.OnClickListener,
 
         mViewModel = new ViewModelProvider(this).get(ConnectionsViewModel.class);
 
+        //Lists connections
         final Observer<List<Connection>> connectionObserver = new Observer<List<Connection>>() {
             @Override
             public void onChanged(List<Connection> connections) {
@@ -142,6 +145,10 @@ public class UniConnections extends Fragment implements View.OnClickListener,
         }
     }
 
+    /** Accepts connection and adds to user's connections list in API
+     * @param connectionID ID of the user who is trying to connect
+     * @param label Label of the user who is trying to connect
+     */
     public void onInvited(String connectionID, String label) {
         DialogFragment connFrag = new AcceptConnection(connectionID, label);
         connFrag.setTargetFragment(this, 0);
@@ -167,6 +174,12 @@ public class UniConnections extends Fragment implements View.OnClickListener,
         this.getConnections();
     }
 
+    /**
+     * Checks if the list of connections is empty
+     * If not, gets the details of each connections and them saves to
+     * their allocated details in the Connection skeleton
+     * @param connections Result of "List Connections" API call
+     */
     @Override
     public void HandleConnections(ConnectionResult connections) {
         if (connections != null && connections.count > 0) {
@@ -174,6 +187,11 @@ public class UniConnections extends Fragment implements View.OnClickListener,
         }
     }
 
+    /**
+     * If QR code scan is successful, send invitation generated
+     * to "AcceptInvitation" class to accept the invitation
+     * @param invitation Invitation generated to accept
+     */
     @Override
     public void onScanSuccess(String invitation) {
         try {
@@ -205,6 +223,7 @@ public class UniConnections extends Fragment implements View.OnClickListener,
 
         HashMap<Connection, Integer> mIdMap = new HashMap<>();
 
+        //Adds connection to list
         public ConnectionArrayAdapter(Context context, int textViewResourceId,
                                       List<Connection> objects) {
             super(context, textViewResourceId, objects);
@@ -214,6 +233,7 @@ public class UniConnections extends Fragment implements View.OnClickListener,
             }
         }
 
+        //Gets the item at position clicked
         @Override
         public long getItemId(int position) {
             Connection item = getItem(position);

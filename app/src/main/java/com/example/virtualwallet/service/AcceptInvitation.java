@@ -31,6 +31,7 @@ public class AcceptInvitation extends AsyncTask<Invitation, Void, InvitationResu
 
     @Override
     protected InvitationResult doInBackground(Invitation... invites) {
+        //Generates the Accept Invitation Interface
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://canis.scoir.ninja/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -38,6 +39,7 @@ public class AcceptInvitation extends AsyncTask<Invitation, Void, InvitationResu
 
         ApiCall apiCall = retrofit.create(ApiCall.class);
 
+        //Http request to the remote webserver
         Call<InvitationResult> call = apiCall.AcceptInvitation(this.cloudAgentId, this.signature, invites[0]);
         try {
             Response<InvitationResult> resp = call.execute();

@@ -33,6 +33,7 @@ public class ListConnections extends AsyncTask<ConnectionRequest, Void, Connecti
 
     @Override
     protected ConnectionResult doInBackground(ConnectionRequest... connectionRequests) {
+        //Generates the List Connections Interface
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://canis.scoir.ninja/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -40,6 +41,7 @@ public class ListConnections extends AsyncTask<ConnectionRequest, Void, Connecti
 
         ApiCall apiCall = retrofit.create(ApiCall.class);
 
+        //Http request to the remote webserver
         Call<ConnectionResult> call = apiCall.ListConnections(this.cloudAgentId, this.signature, connectionRequests[0]);
         try {
             Response<ConnectionResult> resp = call.execute();

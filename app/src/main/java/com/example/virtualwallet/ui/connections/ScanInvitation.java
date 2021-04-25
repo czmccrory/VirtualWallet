@@ -57,6 +57,12 @@ public class ScanInvitation extends Fragment {
         return view;
     }
 
+    /**
+     * Result of scan
+     * @param requestCode Code from request
+     * @param resultCode Code of result after scan
+     * @param data Data from request
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -68,6 +74,7 @@ public class ScanInvitation extends Fragment {
                 Toast.makeText(getContext(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();
                 qrCode = result.getContents();
                 if (listener != null) {
+                    //The following code checks what page user was on previously
                     FragmentManager manager = getFragmentManager();
                     Fragment fragment;
 

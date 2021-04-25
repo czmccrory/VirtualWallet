@@ -30,14 +30,21 @@ public class OfferCredential extends DialogFragment {
         this.hint = hint;
     }
 
+    /**
+     * Dialog box to accept/reject credential
+     * issued/offered to user
+     * @param savedInstanceState Bundle object passed to this method
+     * @return Dialog box
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         binding = FragmentOfferCredentialBinding.inflate(requireActivity().getLayoutInflater());
         binding.setCredentialHint(hint);
-
+        // Use the Builder class for convenient dialog construction
         AlertDialog.Builder adBuilder = new AlertDialog.Builder(getActivity());
-
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
         adBuilder.setView(binding.getRoot());
         adBuilder.setMessage(R.string.accept_credential).setTitle(R.string.title_credentials).setIcon(R.drawable.ic_action_done)
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
@@ -53,7 +60,7 @@ public class OfferCredential extends DialogFragment {
                         listener.onRejecCredentialClick(OfferCredential.this);
                     }
                 });
-
+        // Create the AlertDialog object and return it
         return adBuilder.create();
     }
 
