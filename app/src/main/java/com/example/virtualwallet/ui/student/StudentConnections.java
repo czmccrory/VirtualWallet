@@ -70,15 +70,18 @@ public class StudentConnections extends Fragment implements View.OnClickListener
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
 
+        //Creates a new ArrayList that holds all user connections
         final List<Connection> list = new ArrayList<>();
         final ConnectionArrayAdapter adapter = new ConnectionArrayAdapter(mainActivity,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
+        //Checks if an item in the list is clicked on
         listview.setOnItemClickListener((parent, view, position, id) -> {});
 
         mViewModel = new ViewModelProvider(this).get(ConnectionsViewModel.class);
 
+        //Lists connections
         final Observer<List<Connection>> connectionObserver = new Observer<List<Connection>>() {
             @Override
             public void onChanged(List<Connection> connections) {
@@ -140,6 +143,11 @@ public class StudentConnections extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * Accepts connection and adds to user's connections list in API
+     * @param connectionID ID of the user who is trying to connect
+     * @param label Label of the user who is trying to connect
+     */
     public void onInvited(String connectionID, String label) {
         DialogFragment connFrag = new AcceptConnection(connectionID, label);
         connFrag.setTargetFragment(this, 0);
@@ -165,6 +173,12 @@ public class StudentConnections extends Fragment implements View.OnClickListener
         this.getConnections();
     }
 
+    /**
+     * Checks if the list of connections is empty
+     * If not, gets the details of each connections and them saves to
+     * their allocated details in the Connection skeleton
+     * @param connections Result of "List Connections" API call
+     */
     @Override
     public void HandleConnections(ConnectionResult connections) {
         if (connections != null && connections.count > 0) {
@@ -172,6 +186,11 @@ public class StudentConnections extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * If QR code scan is successful, send invitation generated
+     * to "AcceptInvitation" class to accept the invitation
+     * @param invitation Invitation generated to accept
+     */
     @Override
     public void onScanSuccess(String invitation) {
         try {
@@ -180,8 +199,6 @@ public class StudentConnections extends Fragment implements View.OnClickListener
 
             Invitation req = new Invitation();
             req.invitation = invitation;
-
-            System.out.println("Invitation: " + invitation);
 
             GsonBuilder gsonb = new GsonBuilder();
             Gson gson = gsonb.disableHtmlEscaping().create();
@@ -205,6 +222,7 @@ public class StudentConnections extends Fragment implements View.OnClickListener
     private static class ConnectionArrayAdapter extends ArrayAdapter<Connection> {
         HashMap<Connection, Integer> mIdMap = new HashMap<>();
 
+        //Adds connection to list
         public ConnectionArrayAdapter(Context context, int textViewResourceId,
                                       List<Connection> objects) {
             super(context, textViewResourceId, objects);
@@ -214,6 +232,7 @@ public class StudentConnections extends Fragment implements View.OnClickListener
             }
         }
 
+        //Gets the item at position clicked
         @Override
         public long getItemId(int position) {
             Connection item = getItem(position);
@@ -231,6 +250,9 @@ public class StudentConnections extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * Gets connection from API by calling the "List Connection" class
+     */
     public void getConnections() {
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;

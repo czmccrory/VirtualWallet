@@ -56,6 +56,7 @@ public class EditDetails extends Fragment implements View.OnClickListener{
                 loadFragment(fragment);
                 break;
             case R.id.doneBtn:
+                //Writes new data to file
                 try {
                     WriteData(getContext(), editName.getText().toString(), editDob.getText().toString());
                 } catch (IOException e) {

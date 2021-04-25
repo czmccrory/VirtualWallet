@@ -28,6 +28,7 @@ public class RegisterActivity extends AsyncTask<Registration, Void, CloudAgent> 
 
     @Override
     protected CloudAgent doInBackground(Registration... registrations) {
+        //Generates the Register Interface
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://canis.scoir.ninja/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -35,6 +36,7 @@ public class RegisterActivity extends AsyncTask<Registration, Void, CloudAgent> 
 
         ApiCall service = retrofit.create(ApiCall.class);
 
+        //Http request to the remote webserver
         Call<CloudAgent> call = service.Register(
                 registrations[0]
         );

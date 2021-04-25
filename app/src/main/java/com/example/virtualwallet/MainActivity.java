@@ -66,10 +66,12 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         Fragment fragment = new Login();
         loadFragment(fragment);
 
+        //Creates a new Wallet for each user
         this.studentWallet = new Wallet();
         this.companyWallet = new Wallet();
         this.uniWallet = new Wallet();
 
+        //If wallet(s) exist, read the data
         try {
             InputStream in1 = this.openFileInput(STUDENT_WALLET_FILE_NAME);
             InputStream in2 = this.openFileInput(COMPANY_WALLET_FILE_NAME);
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
             this.studentWallet = gson.fromJson(new InputStreamReader(in1), Wallet.class);
             this.companyWallet = gson.fromJson(new InputStreamReader(in2), Wallet.class);
             this.uniWallet = gson.fromJson(new InputStreamReader(in3), Wallet.class);
+        //If wallet(s) does not exist, create them
         } catch (FileNotFoundException e) {
             System.out.println("*****************************************************************");
             System.out.println("exception finding file, initializing cloud agent");
@@ -88,44 +91,57 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         }
     }
 
+    /**
+     * Creates wallet for each user &
+     * generates a Cloud Agent ID for each user
+     */
     private void initializeCloudAgent() {
         try {
             SignatureConfig.register();
 
+            //Student signing keys
             Ed25519Sign.KeyPair signStudentKeyPair = Ed25519Sign.KeyPair.newKeyPair();
             byte[] signStudentPubKeyBytes = signStudentKeyPair.getPublicKey();
             byte[] signStudentPrivKeyBytes = signStudentKeyPair.getPrivateKey();
 
+            //Student "next" keys
             Ed25519Sign.KeyPair nextStudentKeyPair = Ed25519Sign.KeyPair.newKeyPair();
             byte[] nextStudentPubKeyBytes = nextStudentKeyPair.getPublicKey();
             byte[] nextStudentPrivKeyBytes = nextStudentKeyPair.getPrivateKey();
 
+            //Adds keys to wallet
             this.studentWallet.publicSigningKey = Base64.encodeToString(signStudentPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
             this.studentWallet.publicNextKey = Base64.encodeToString(nextStudentPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
             this.studentWallet.privateSigningKey = Base64.encodeToString(signStudentPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
             this.studentWallet.privateNextKey = Base64.encodeToString(nextStudentPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
 
+            //Company signing keys
             Ed25519Sign.KeyPair signCompanyKeyPair = Ed25519Sign.KeyPair.newKeyPair();
             byte[] signCompanyPubKeyBytes = signCompanyKeyPair.getPublicKey();
             byte[] signCompanyPrivKeyBytes = signCompanyKeyPair.getPrivateKey();
 
+            //Company "next" keys
             Ed25519Sign.KeyPair nextCompanyKeyPair = Ed25519Sign.KeyPair.newKeyPair();
             byte[] nextCompanyPubKeyBytes = nextCompanyKeyPair.getPublicKey();
             byte[] nextCompanyPrivKeyBytes = nextCompanyKeyPair.getPrivateKey();
 
+            //Adds keys to wallet
             this.companyWallet.publicSigningKey = Base64.encodeToString(signCompanyPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
             this.companyWallet.publicNextKey = Base64.encodeToString(nextCompanyPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
             this.companyWallet.privateSigningKey = Base64.encodeToString(signCompanyPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
             this.companyWallet.privateNextKey = Base64.encodeToString(nextCompanyPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
 
+            //University/college signing keys
             Ed25519Sign.KeyPair signUniKeyPair = Ed25519Sign.KeyPair.newKeyPair();
             byte[] signUniPubKeyBytes = signUniKeyPair.getPublicKey();
             byte[] signUniPrivKeyBytes = signUniKeyPair.getPrivateKey();
 
+            //University/college "next" keys
             Ed25519Sign.KeyPair nextUniKeyPair = Ed25519Sign.KeyPair.newKeyPair();
             byte[] nextUniPubKeyBytes = nextUniKeyPair.getPublicKey();
             byte[] nextUniPrivKeyBytes = nextUniKeyPair.getPrivateKey();
 
+            //Adds keys to wallet
             this.uniWallet.publicSigningKey = Base64.encodeToString(signUniPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
             this.uniWallet.publicNextKey = Base64.encodeToString(nextUniPubKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
             this.uniWallet.privateSigningKey = Base64.encodeToString(signUniPrivKeyBytes, Base64.DEFAULT | Base64.NO_WRAP);
@@ -140,6 +156,11 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
 
     ReentrantLock lock = new ReentrantLock();
 
+    /**
+     * Registers each user &
+     * generates a Cloud Agent ID
+     * @param wallets Array of wallets
+     */
     void Register(Wallet[] wallets) {
         for (int i = 0; i < wallets.length; i++) {
             lock.lock();
@@ -216,6 +237,11 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         }
     }
 
+    /**
+     * Gets Cloud Agent ID from registration &
+     * adds them to each user's wallet
+     * @param cloudAgent Cloud Agent ID generated from registration
+     */
     @Override
     public void HandleCloudAgent(CloudAgent cloudAgent) {
         for(int x=0; x<3; x++) {
@@ -267,18 +293,36 @@ public class MainActivity extends AppCompatActivity implements RegisterActivity.
         return scanInvitationListener;
     }
 
+    /**
+     * Signs data with student's private signing key
+     * @param data Data to be signed
+     * @return Signed data
+     * @throws GeneralSecurityException
+     */
     public byte[] StudentSign(byte[] data) throws GeneralSecurityException {
         byte[] privKey = Base64.decode(this.studentWallet.privateSigningKey, Base64.DEFAULT | Base64.NO_WRAP);
         Ed25519Sign signer = new Ed25519Sign(privKey);
         return signer.sign(data);
     }
 
+    /**
+     * Signs data with company's private signing key
+     * @param data Data to be signed
+     * @return Signed data
+     * @throws GeneralSecurityException
+     */
     public byte[] CompanySign(byte[] data) throws GeneralSecurityException {
         byte[] privKey = Base64.decode(this.companyWallet.privateSigningKey, Base64.DEFAULT | Base64.NO_WRAP);
         Ed25519Sign signer = new Ed25519Sign(privKey);
         return signer.sign(data);
     }
 
+    /**
+     * Signs data with university's private signing key
+     * @param data Data to be signed
+     * @return Signed data
+     * @throws GeneralSecurityException
+     */
     public byte[] UniSign(byte[] data) throws GeneralSecurityException {
         byte[] privKey = Base64.decode(this.uniWallet.privateSigningKey, Base64.DEFAULT | Base64.NO_WRAP);
         Ed25519Sign signer = new Ed25519Sign(privKey);

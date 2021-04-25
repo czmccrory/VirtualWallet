@@ -8,6 +8,9 @@ import com.example.virtualwallet.model.Credential;
 
 import java.util.List;
 
+/**
+ * This class prepares the live data received from the API
+ */
 public class CredentialsViewModel extends ViewModel {
 
     private MutableLiveData<List<Credential>> credentials;

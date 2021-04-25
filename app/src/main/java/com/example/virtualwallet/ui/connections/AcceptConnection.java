@@ -27,11 +27,16 @@ public class AcceptConnection extends DialogFragment {
         this.label = label;
     }
 
+    /**
+     * Dialog box to accept/reject connection
+     * offered to user
+     * @param savedInstanceState Bundle object passed to this method
+     * @return Dialog box
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout

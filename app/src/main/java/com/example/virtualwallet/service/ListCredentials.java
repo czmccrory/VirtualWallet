@@ -31,6 +31,7 @@ public class ListCredentials extends AsyncTask<CredentialRequest, Void, Credenti
 
     @Override
     protected CredentialResult doInBackground(CredentialRequest... reqs) {
+        //Generates the List Credentials Interface
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://canis.scoir.ninja/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -38,6 +39,7 @@ public class ListCredentials extends AsyncTask<CredentialRequest, Void, Credenti
 
         ApiCall apiCall = retrofit.create(ApiCall.class);
 
+        //Http request to the remote webserver
         Call<CredentialResult> call = apiCall.ListCredentials(this.cloudAgentId, this.signature, reqs[0]);
         try {
             Response<CredentialResult> resp = call.execute();
