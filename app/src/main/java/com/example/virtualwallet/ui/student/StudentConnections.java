@@ -181,8 +181,6 @@ public class StudentConnections extends Fragment implements View.OnClickListener
             Invitation req = new Invitation();
             req.invitation = invitation;
 
-            System.out.println("Invitation: " + invitation);
-
             GsonBuilder gsonb = new GsonBuilder();
             Gson gson = gsonb.disableHtmlEscaping().create();
             String json = gson.toJson(req);

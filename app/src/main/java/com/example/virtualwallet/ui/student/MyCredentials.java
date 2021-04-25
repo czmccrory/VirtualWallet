@@ -159,7 +159,9 @@ public class MyCredentials extends Fragment implements View.OnClickListener, Off
 
     @Override
     public void HandleCredentials(CredentialResult result) {
-        mViewModel.getCredentials().setValue(result.credentials);
+        if(result != null) {
+            mViewModel.getCredentials().setValue(result.credentials);
+        }
     }
 
     @Override

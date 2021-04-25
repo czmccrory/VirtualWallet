@@ -59,7 +59,6 @@ public class StudentCredentials extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_credentials, container, false);
-        Set<?> set = new HashSet<>();
 
         Button back = (Button) view.findViewById(R.id.back);
         Button logout = (Button) view.findViewById(R.id.logout);
@@ -194,7 +193,9 @@ public class StudentCredentials extends Fragment implements View.OnClickListener
 
     @Override
     public void HandleCredentials(CredentialResult result) {
-        mViewModel.getCredentials().setValue(result.credentials);
+        if(result != null) {
+            mViewModel.getCredentials().setValue(result.credentials);
+        }
     }
 
     @Override
